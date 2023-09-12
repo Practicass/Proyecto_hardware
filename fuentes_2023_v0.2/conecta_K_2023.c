@@ -54,7 +54,17 @@ void conecta_K_test_cargar_tablero(TABLERO *t)
 {
 	#include "tablero_test.h"	
 
-	//for... for... tablero_insertar_color...
+	//for... for... tablero_insertar_color...	
+	for(int i=0; i<7; i++){
+		int n=0;
+		for(int j=0; j<7; j++){
+			int color = tablero_test[i][j];
+			if( color != 0){
+				tablero_insertar_color(t,i,j,color);
+				n++;
+			}
+		}
+	}
 
 }
 
@@ -73,6 +83,18 @@ void conecta_K_visualizar_tablero(TABLERO *t, uint8_t pantalla[8][8])
 {
 //.... tablero_leer_celda...
 //... celda_color ....
+	for(int x=1; x<8; x++){
+		pantalla[x][0] = 240 + x;
+	}
+	for(int y=1; y<8; y++){
+		pantalla[0][y] = 192 + y;
+	}
+	for(int i=0; i<7; i++){
+		for(int j=0; j<7; j++){
+			int color=celda_color(tablero_leer_celda(t,i,t->columnas[i][j]));
+			pantalla[i+1][t->columnas[i][j]+1] = color*16+color;
+		}
+	}
 }  
 
 //
@@ -98,6 +120,7 @@ void conecta_K_jugar(void){
 
 	conecta_K_test_cargar_tablero(&cuadricula);
 	conecta_K_visualizar_tablero(&cuadricula, salida);
+
 
 	entrada_inicializar(entrada);
 	
