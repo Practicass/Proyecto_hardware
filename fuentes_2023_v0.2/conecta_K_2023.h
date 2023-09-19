@@ -6,6 +6,7 @@
 #include "celda.h"
 #include "tablero.h"
 
+
 /* *****************************************************************************
  * declaracion de funciones visibles en el exterior conecta_K
  */
@@ -20,6 +21,10 @@ uint8_t conecta_K_buscar_alineamiento_c(TABLERO *t, uint8_t fila,
 
 // devuelve true si encuentra una línea de longitud mayor o igual a 4
 uint8_t conecta_K_hay_linea_c_c(TABLERO *t, uint8_t fila, uint8_t
+	columna, uint8_t color);
+
+// devuelve true si encuentra una línea de longitud mayor o igual a 4
+uint8_t conecta_K_hay_linea_c_arm(TABLERO *t, uint8_t fila, uint8_t
 	columna, uint8_t color);
 
 #if 0
