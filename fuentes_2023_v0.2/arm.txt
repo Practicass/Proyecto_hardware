@@ -27,15 +27,17 @@ conecta_K_hay_linea_c_c(TABLERO *t, uint8_t fila, uint8_t columna, uint8_t color
 }
 
 stmdb r13!, {r0-r10,r14}
-mov r4, r0
-mov r5, r1
-mov r6, r2
-mov r7, r3
-mov r8, #4
-mov r9, #0x01ffff00
-str r9, [r13,#0x000c]
-mov r9, #0xff00ffff
-str r9, [r13,#0x0008]
-mov r10, #0
+mov r4, #4
+mov r5, #0x01ffff00
+str r5, [r13,#0x000c]
+mov r5, #0xff00ffff
+str r5, [r13,#0x0008]
+mov r6, #0
+mov r7, #0
+cmp r6, #4
+bcs salto
+cmp r7, #0
+bcs
+
 
 
