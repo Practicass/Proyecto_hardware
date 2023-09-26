@@ -12,13 +12,13 @@
 ;conecta_K_buscar_alineamiento_arm
 
 conecta_K_buscar_alineamiento_arm 
-    stmdb     r13!,{r2-r12,r14}
-    mov       r10,r0
-    mov       r4,r1
-    mov       r5,r2
-    mov       r11,r3
-    add       r7,r13,#0x00000030
-    ldmia     r7,{r6-r7}
+    stmdb     r13!,{r4-r12,r14}
+    mov       r10,r0; r10=1arg 
+    mov       r4,r1; r4=2arg
+    mov       r5,r2; r5=3arg
+    mov       r11,r3; r11=4arg
+    add       r7,r13,#0x00000028; r7= cima pila  
+    ldmia     r7,{r6-r7}; r6=
     mov       r3,r11
     mov       r2,r5
     mov       r1,r4
@@ -80,7 +80,7 @@ jump7 mvn       r0,#0x00000000
 jump12 cmp       r0,#0x00000000
     beq       jump20
     mov       r0,#0x00000000
-jump1 ldmia     r13!,{r2-r12,r14}
+jump1 ldmia     r13!,{r4-r12,r14}
     bx        r14
 jump20 add       r0,r4,r6
     and       r8,r0,#0x000000ff
