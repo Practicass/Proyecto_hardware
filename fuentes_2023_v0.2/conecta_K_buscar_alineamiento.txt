@@ -325,25 +325,71 @@ BUSCAR ALINEAMIENTO
 
 
 TABLERO BUSCAR COLOR
-0x00000A34  E92D41F0  STMDB     R13!,{R4-R8,R14}
-0x00000A38  E1A06000  MOV       R6,R0
-0x00000A3C  E1A05001  MOV       R5,R1
-0x00000A40  E1A07002  MOV       R7,R2
-0x00000A44  E1A08003  MOV       R8,R3
-   134:         if( !tablero_fila_valida(fila) || !tablero_columna_valida(columna)) { 
-0x00000A48  E1A00005  MOV       R0,R5
-0x00000A4C  EB000024  BL        tablero_fila_valida(0x00000AE4)
-0x00000A50  E3500000  CMP       R0,#0x00000000
-0x00000A54  0A000003  BEQ       0x00000A68
-0x00000A58  E1A00007  MOV       R0,R7
-0x00000A5C  EB000019  BL        tablero_columna_valida(0x00000AC8)
-0x00000A60  E3500000  CMP       R0,#0x00000000
-0x00000A64  1A000002  BNE       0x00000A74
+0x00000A34  E92D41F0  STMDB     R13!,{R4-R8,R14} ; guardar estado anterior
+0x00000A38  E1A06000  MOV       R6,R0 ; r6=tablero
+0x00000A3C  E1A05001  MOV       R5,R1 ; r5=fila
+0x00000A40  E1A07002  MOV       R7,R2 ; r7=columna
+0x00000A44  E1A08003  MOV       R8,R3 ; r8=color
 
-0x00000A68  E3E00000  MVN       R0,#0x00000000
-0x00000A6C  E8BD41F0  LDMIA     R13!,{R4-R8,R14}
-   149: } 
+0x00000A48  E1A00005  MOV       R0,R5 ; r0=fila
+
+    BL        tablero_fila_valida(0x00000AE4)
+----------------------------------------------
+0x00000AE4  E1A01000  MOV       R1,R0 ; r1=fila
+0x00000AE8  E3510007  CMP       R1,#0x00000007 ; r1=fila==7?
+0x00000AEC  AA000001  BGE       hop9
+0x00000AF0  E3A00001  MOV       R0,#0x00000001 ; return true
+                      B         hop8
+0x00000AF4  E12FFF1E  hop9 MOV       R0,#0x00000001 ; return false
+--------------------------------------------
+
+0x00000A50  E3500000  hop8 CMP       R0,#0x00000000 ; r0=tablero_fila_valida(fila) == false?
+0x00000A54  0A000003  BEQ       hop3
+0x00000A58  E1A00007  MOV       R0,R7 ; r0=columna
+
+
+  BL        tablero_columna_valida(0x00000AC8)
+----------------------------------------------
+0x00000AE4  E1A01000  MOV       R1,R0 ; r1=fila
+0x00000AE8  E3510007  CMP       R1,#0x00000007 ; r1=fila==7?
+0x00000AEC  AA000001  BGE       hop11
+0x00000AF0  E3A00001  MOV       R0,#0x00000001 ; return true
+                      B         hop10
+0x00000AF4  E12FFF1E  hop11 MOV       R0,#0x00000001 ; return false
+--------------------------------------------
+
+0x00000A60  E3500000  hop10 CMP       R0,#0x00000000 ; r0=tablero_columna_valida(fila) == false?
+0x00000A64  1A000002  BNE       hop4
+
+0x00000A68  E3E00000  hop3 MVN       R0,#0x00000000 ; return error
+0x00000A6C  E8BD41F0  hop7 LDMIA     R13!,{R4-R8,R14}
+
 0x00000A70  E12FFF1E  BX        R14
+
+0x00000A74  E3A04000  hop4 MOV       R4,#0x00000000 ; r4=col = 0
+
+0x00000A80  E3540006  hop6 CMP       R4,#0x00000006 ; col < 6?
+0x00000A84  8A000004  BGE       hop5
+0x00000A88  E0850085  ADD       R0,R5,R5,LSL #1 
+0x00000A8C  E0860080  ADD       R0,R6,R0,LSL #1
+0x00000A90  E7D00004  LDRB      R0,[R0,R4] ; r0=t->columnas[fila][col]
+0x00000A94  E1500007  CMP       R0,R7 ; r0 == columna
+0x00000A98  1AFFFFF7  BEQ       hop5
+0x00000A7C  E2844001  ADD       R4,R4,#0x00000001 ; col++
+0x00000A78  EA000000  B         hop6
+
+0x00000A9C  E0851085  hop5 ADD       R1,R5,R5,LSL #1 
+0x00000AA0  E286202A  ADD       R2,R6,#0x0000002A
+0x00000AA4  E0821081  ADD       R1,R2,R1,LSL #1
+0x00000AA8  E7D10004  LDRB      R0,[R1,R4] ; r0=t->no_ceros[fila][col]
+
+0x00000AAC  E2001003  AND       R1,R0,#0x00000003 ; r1 = celda_color(t->no_ceros[fila][col])
+0x00000AB0  E1510008  CMP       R1,R8 ; celda_color(t->no_ceros[fila][col]) == color?
+0x00000AB4  1A000001  BNE       hop3
+
+0x00000AB8  E3A00000  MOV       R0,#0x00000000 ; return exito
+0x00000ABC  EAFFFFEA  B         hop7
+
 
 
 
@@ -354,10 +400,7 @@ TABLERO FILA VALIDA
 0x00000AE8  E3510007  CMP       R1,#0x00000007
 0x00000AEC  AA000001  BGE       0x00000AF8
 0x00000AF0  E3A00001  MOV       R0,#0x00000001
-    74: } 
-    75:  
-    76: // el color es valido? 
-    77: static inline uint8_t tablero_color_valido(uint8_t color) { 
+
 0x00000AF4  E12FFF1E  BX        R14
 
 
@@ -388,24 +431,163 @@ TABLERO COLUMNA VALIDA
 
 
 
- STMDB     R13!,{R4-R10,R14}; guarda estado anterior
- MOV       R7,R0 ; r7=tablero
- MOV       R4,R1 ; r4=fila
- MOV       R5,R2 ; r5=columna
- MOV       R8,R3 ; r8=color
- ADD       R10,R13,#0x00000004 ; r10=cima de pila
- LDMIA     R10,{R9-R10} ; r9=deltas_fila y r10=deltas_columna
- MOV       R6,#0x00000000 ; r6=longitud=0
- hop1 BL        tablero_buscar_color(0x00000A34)
- CMP       R0,#0x00000000 ; r0=tablero_buscar_color() y r0=EXITO?
- BNE       hop2
- ADD       R0,R6,#0x00000001 ; r0=
- AND       R6,R0,#0x000000FF
- ADD       R0,R4,R9
- AND       R4,R0,#0x000000FF
- ADD       R0,R5,R10
- AND       R5,R0,#0x000000FF
- B         hop1
- hop2 MOV       R0,R6
- LDMIA     R13!,{R4-R10,R14}
- BX        R14
+    stmdb     r13!,{r4-r10,r14}; guarda estado anterior
+    mov       r7,r0 ; r7=tablero
+    mov       r4,r1 ; r4=fila
+    mov       r5,r2 ; r5=columna
+    mov       r8,r3 ; r8=color
+    add       r10,r13,#0x00000004 ; r10=cima de pila
+    ldmia     r10,{r9-r10} ; r9=deltas_fila y r10=deltas_columna
+    mov       r6,#0x00000000 ; r6=longitud=0
+
+ ;hop1 bl        tablero_buscar_color(0x00000a34)
+;---------------------------------------
+hop1    stmdb     r13!,{r4-r8,r14} ; guardar estado anterior
+    mov       r6,r0 ; r6=tablero
+    mov       r5,r1 ; r5=fila
+    mov       r7,r2 ; r7=columna
+    mov       r8,r3 ; r8=color
+
+    mov       r0,r5 ; r0=fila
+
+   ;; bl        tablero_fila_valida(0x00000ae4)
+;----------------------------------------------
+    mov       r1,r0 ; r1=fila
+    cmp       r1,#0x00000007 ; r1=fila==7?
+    bge       hop9
+    mov       r0,#0x00000001 ; return true
+                      b         hop8
+hop9 mov       r0,#0x00000001 ; return false
+;--------------------------------------------
+
+hop8 cmp       r0,#0x00000000 ; r0=tablero_fila_valida(fila) == false?
+    beq       hop3
+    mov       r0,r7 ; r0=columna
+
+
+ ; bl        tablero_columna_valida(0x00000ac8)
+;----------------------------------------------
+    mov       r1,r0 ; r1=fila
+    cmp       r1,#0x00000007 ; r1=fila==7?
+    bge       hop11
+    mov       r0,#0x00000001 ; return true
+                      b         hop10
+hop11 mov       r0,#0x00000001 ; return false
+;--------------------------------------------
+
+hop10 cmp       r0,#0x00000000 ; r0=tablero_columna_valida(fila) == false?
+    bne       hop4
+
+hop3 mvn       r0,#0x00000000 ; return error
+hop7 ldmia     r13!,{r4-r8,r14}
+
+    b     hop12
+
+hop4 mov       r4,#0x00000000 ; r4=col = 0
+
+hop6 cmp       r4,#0x00000006 ; col < 6?
+    bge       hop5
+    add       r0,r5,r5,lsl #1 
+    add       r0,r6,r0,lsl #1
+    ldrb      r0,[r0,r4] ; r0=t->columnas[fila][col]
+    cmp       r0,r7 ; r0 == columna
+    beq       hop5
+    add       r4,r4,#0x00000001 ; col++
+    b         hop6
+
+hop5 add       r1,r5,r5,lsl #1 
+    add       r2,r6,#0x0000002a
+    add       r1,r2,r1,lsl #1
+    ldrb      r0,[r1,r4] ; r0=t->no_ceros[fila][col]
+
+    and       r1,r0,#0x00000003 ; r1 = celda_color(t->no_ceros[fila][col])
+    cmp       r1,r8 ; celda_color(t->no_ceros[fila][col]) == color?
+    bne       hop3
+
+    mov       r0,#0x00000000 ; return exito
+    b         hop7
+;-----------------------------------------
+
+ hop12 cmp       r0,#0x00000000 ; r0=tablero_buscar_color() y r0=exito?
+ bne       hop2
+ add       r6,r6,#0x00000001 ; r6=longitud++
+ add       r4,r4,r9 ; r4=fila += delta_fila
+ add       r5,r5,r10 ; columna += delta_columna
+ b         hop1
+ hop2 mov       r0,r6 ; return longitud
+ ldmia     r13!,{r4-r10,r14}
+ bx        r14
+
+
+
+
+
+
+
+
+
+
+ 0x00000A34  E92D41F0  STMDB     R13!,{R4-R8,R14} ; guardar estado anterior
+0x00000A38  E1A06000  MOV       R6,R0 ; r6=tablero
+0x00000A3C  E1A05001  MOV       R5,R1 ; r5=fila
+0x00000A40  E1A07002  MOV       R7,R2 ; r7=columna
+0x00000A44  E1A08003  MOV       R8,R3 ; r8=color
+
+0x00000A48  E1A00005  MOV       R0,R5 ; r0=fila
+
+    BL        tablero_fila_valida(0x00000AE4)
+----------------------------------------------
+0x00000AE4  E1A01000  MOV       R1,R0 ; r1=fila
+0x00000AE8  E3510007  CMP       R1,#0x00000007 ; r1=fila==7?
+0x00000AEC  AA000001  BGE       hop9
+0x00000AF0  E3A00001  MOV       R0,#0x00000001 ; return true
+                      B         hop8
+0x00000AF4  E12FFF1E  hop9 MOV       R0,#0x00000001 ; return false
+--------------------------------------------
+
+0x00000A50  E3500000  hop8 CMP       R0,#0x00000000 ; r0=tablero_fila_valida(fila) == false?
+0x00000A54  0A000003  BEQ       hop3
+0x00000A58  E1A00007  MOV       R0,R7 ; r0=columna
+
+
+  BL        tablero_columna_valida(0x00000AC8)
+----------------------------------------------
+0x00000AE4  E1A01000  MOV       R1,R0 ; r1=fila
+0x00000AE8  E3510007  CMP       R1,#0x00000007 ; r1=fila==7?
+0x00000AEC  AA000001  BGE       hop11
+0x00000AF0  E3A00001  MOV       R0,#0x00000001 ; return true
+                      B         hop10
+0x00000AF4  E12FFF1E  hop11 MOV       R0,#0x00000001 ; return false
+--------------------------------------------
+
+0x00000A60  E3500000  hop10 CMP       R0,#0x00000000 ; r0=tablero_columna_valida(fila) == false?
+0x00000A64  1A000002  BNE       hop4
+
+0x00000A68  E3E00000  hop3 MVN       R0,#0x00000000 ; return error
+0x00000A6C  E8BD41F0  hop7 LDMIA     R13!,{R4-R8,R14}
+
+0x00000A70  E12FFF1E  BX        R14
+
+0x00000A74  E3A04000  hop4 MOV       R4,#0x00000000 ; r4=col = 0
+
+0x00000A80  E3540006  hop6 CMP       R4,#0x00000006 ; col < 6?
+0x00000A84  8A000004  BGE       hop5
+0x00000A88  E0850085  ADD       R0,R5,R5,LSL #1 
+0x00000A8C  E0860080  ADD       R0,R6,R0,LSL #1
+0x00000A90  E7D00004  LDRB      R0,[R0,R4] ; r0=t->columnas[fila][col]
+0x00000A94  E1500007  CMP       R0,R7 ; r0 == columna
+0x00000A98  1AFFFFF7  BEQ       hop5
+0x00000A7C  E2844001  ADD       R4,R4,#0x00000001 ; col++
+0x00000A78  EA000000  B         hop6
+
+0x00000A9C  E0851085  hop5 ADD       R1,R5,R5,LSL #1 
+0x00000AA0  E286202A  ADD       R2,R6,#0x0000002A
+0x00000AA4  E0821081  ADD       R1,R2,R1,LSL #1
+0x00000AA8  E7D10004  LDRB      R0,[R1,R4] ; r0=t->no_ceros[fila][col]
+
+0x00000AAC  E2001003  AND       R1,R0,#0x00000003 ; r1 = celda_color(t->no_ceros[fila][col])
+0x00000AB0  E1510008  CMP       R1,R8 ; celda_color(t->no_ceros[fila][col]) == color?
+0x00000AB4  1A000001  BNE       hop3
+
+0x00000AB8  E3A00000  MOV       R0,#0x00000000 ; return exito
+0x00000ABC  EAFFFFEA  B         hop7
