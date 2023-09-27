@@ -9,22 +9,25 @@ extern uint8_t conecta_K_buscar_alineamiento_arm(TABLERO *t, uint8_t fila,
 extern uint8_t conecta_K_hay_linea_arm_c(TABLERO *t, uint8_t fila, uint8_t
 	columna, uint8_t color);
 
+extern uint8_t conecta_K_hay_linea_arm_arm(TABLERO *t, uint8_t fila, uint8_t
+	columna, uint8_t color);
+
 // devuelve la longitud de la línea más larga en un determinado sentido
 uint8_t conecta_K_buscar_alineamiento_c(TABLERO *t, uint8_t fila,
 	uint8_t columna, uint8_t color, int8_t delta_fila, int8_t
 	delta_columna)
 {
-		// comprobar si la celda es valida y del mismo color
-		if (tablero_buscar_color(t, fila, columna, color) != EXITO) {
-			return 0;
-		}
-		
-    // encontrada, entonces avanzar índices
-    uint8_t nueva_fila = fila + delta_fila;
-    uint8_t nueva_columna = columna + delta_columna;
+uint8_t longitud = 0;
+    
+    while (tablero_buscar_color(t, fila, columna, color) == EXITO) {
+        
+        // Incrementar la longitud y avanzar a la celda vecina
+        longitud++;
+        fila += delta_fila;
+        columna += delta_columna;
+    }
 
-    // incrementar longitud y visitar celda vecina
-    return 1 + conecta_K_buscar_alineamiento_c(t, nueva_fila, nueva_columna, color, delta_fila, delta_columna);
+    return longitud;
 }
 
 // devuelve true si encuentra una línea de longitud mayor o igual a _K
@@ -138,10 +141,12 @@ void conecta_K_visualizar_tablero(TABLERO *t, uint8_t pantalla[8][8])
 //
 int conecta_K_verificar_K_en_linea(TABLERO *t, uint8_t fila, uint8_t columna, uint8_t color){
 	// en esta funcion es donde se debe verificar que todas las optimizaciones dan el mismo resultado
-	uint8_t resultado_c_c = conecta_K_hay_linea_arm_c(t, fila, columna, color);
-	//uint8_t resultado_arm_c = conecta4_hay_linea_arm_c ....
-	//if(resultado_c_c != resultado_arm_c) ...  while(1); a depurar
+	uint8_t resultado_c_c = conecta_K_hay_linea_c_c(t, fila, columna, color);
+	//uint8_t resultado_arm_arm = conecta_K_hay_linea_arm_arm(t, fila, columna, color);
+
+	//if(resultado_arm_arm != resultado_c_c) while(1);
 	return resultado_c_c;
+	//return resultado_arm_arm;
 }
 
 void conecta_K_jugar(void){
@@ -186,4 +191,3 @@ void conecta_K_jugar(void){
 		entrada_inicializar (entrada);
 	}
 }
-

@@ -234,3 +234,178 @@ TABLERO COLUMNA VALIDA
 0x00000C14  E12FFF1E  jump11 BX        R14
 0x00000C18  E3A00000  jump10 MOV       R0,#0x00000000
 0x00000C1C  EAFFFFFC  B         jump11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BUSCAR ALINEAMIENTO
+
+0x00000594  E92D47F0  STMDB     R13!,{R4-R10,R14}; guarda estado anterior
+0x00000598  E1A07000  MOV       R7,R0 ; r7=tablero
+0x0000059C  E1A04001  MOV       R4,R1 ; r4=fila
+0x000005A0  E1A05002  MOV       R5,R2 ; r5=columna
+0x000005A4  E1A08003  MOV       R8,R3 ; r8=color
+0x000005A8  E28DA020  ADD       R10,R13,#0x00000004 ; r10=cima de pila
+0x000005AC  E89A0600  LDMIA     R10,{R9-R10} ; r9=deltas_fila y r10=deltas_columna
+
+0x000005B0  E3A06000  MOV       R6,#0x00000000 ; r6=longitud=0
+
+0x000005B4  EA000005  B         hop1
+
+0x000005B8  E2860001  hop2 ADD       R0,R6,#0x00000001
+0x000005BC  E20060FF  AND       R6,R0,#0x000000FF
+
+0x000005C0  E0840009  ADD       R0,R4,R9
+0x000005C4  E20040FF  AND       R4,R0,#0x000000FF
+
+0x000005C8  E085000A  ADD       R0,R5,R10
+0x000005CC  E20050FF  AND       R5,R0,#0x000000FF
+
+0x000005D0  E1A03008  hop1 MOV       R3,R8
+0x000005D4  E1A02005  MOV       R2,R5
+0x000005D8  E1A01004  MOV       R1,R4
+0x000005DC  E1A00007  MOV       R0,R7
+0x000005E0  EB000113  BL        tablero_buscar_color(0x00000A34)
+0x000005E4  E3500000  CMP       R0,#0x00000000
+0x000005E8  0AFFFFF2  BEQ       hop2
+
+0x000005EC  E1A00006  MOV       R0,R6
+0x000005F0  E8BD47F0  LDMIA     R13!,{R4-R10,R14}
+
+0x000005F4  E12FFF1E  BX        R14
+
+
+
+
+
+
+
+TABLERO BUSCAR COLOR
+0x00000A34  E92D41F0  STMDB     R13!,{R4-R8,R14}
+0x00000A38  E1A06000  MOV       R6,R0
+0x00000A3C  E1A05001  MOV       R5,R1
+0x00000A40  E1A07002  MOV       R7,R2
+0x00000A44  E1A08003  MOV       R8,R3
+   134:         if( !tablero_fila_valida(fila) || !tablero_columna_valida(columna)) { 
+0x00000A48  E1A00005  MOV       R0,R5
+0x00000A4C  EB000024  BL        tablero_fila_valida(0x00000AE4)
+0x00000A50  E3500000  CMP       R0,#0x00000000
+0x00000A54  0A000003  BEQ       0x00000A68
+0x00000A58  E1A00007  MOV       R0,R7
+0x00000A5C  EB000019  BL        tablero_columna_valida(0x00000AC8)
+0x00000A60  E3500000  CMP       R0,#0x00000000
+0x00000A64  1A000002  BNE       0x00000A74
+
+0x00000A68  E3E00000  MVN       R0,#0x00000000
+0x00000A6C  E8BD41F0  LDMIA     R13!,{R4-R8,R14}
+   149: } 
+0x00000A70  E12FFF1E  BX        R14
+
+
+
+
+TABLERO FILA VALIDA
+0x00000AE4  E1A01000  MOV       R1,R0
+    73:   return fila < NUM_FILAS; 
+0x00000AE8  E3510007  CMP       R1,#0x00000007
+0x00000AEC  AA000001  BGE       0x00000AF8
+0x00000AF0  E3A00001  MOV       R0,#0x00000001
+    74: } 
+    75:  
+    76: // el color es valido? 
+    77: static inline uint8_t tablero_color_valido(uint8_t color) { 
+0x00000AF4  E12FFF1E  BX        R14
+
+
+
+TABLERO COLUMNA VALIDA
+0x00000AC8  E1A01000  MOV       R1,R0
+    68:         return columna < NUM_COLUMNAS; 
+0x00000ACC  E3510007  CMP       R1,#0x00000007
+0x00000AD0  AA000001  BGE       0x00000ADC
+0x00000AD4  E3A00001  MOV       R0,#0x00000001
+    69: } 
+    70:  
+    71: // la fila es valida? 
+0x00000AD8  E12FFF1E  BX        R14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ STMDB     R13!,{R4-R10,R14}; guarda estado anterior
+ MOV       R7,R0 ; r7=tablero
+ MOV       R4,R1 ; r4=fila
+ MOV       R5,R2 ; r5=columna
+ MOV       R8,R3 ; r8=color
+ ADD       R10,R13,#0x00000004 ; r10=cima de pila
+ LDMIA     R10,{R9-R10} ; r9=deltas_fila y r10=deltas_columna
+ MOV       R6,#0x00000000 ; r6=longitud=0
+ hop1 BL        tablero_buscar_color(0x00000A34)
+ CMP       R0,#0x00000000 ; r0=tablero_buscar_color() y r0=EXITO?
+ BNE       hop2
+ ADD       R0,R6,#0x00000001 ; r0=
+ AND       R6,R0,#0x000000FF
+ ADD       R0,R4,R9
+ AND       R4,R0,#0x000000FF
+ ADD       R0,R5,R10
+ AND       R5,R0,#0x000000FF
+ B         hop1
+ hop2 MOV       R0,R6
+ LDMIA     R13!,{R4-R10,R14}
+ BX        R14

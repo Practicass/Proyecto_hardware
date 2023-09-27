@@ -45,7 +45,7 @@ conecta_K_hay_linea_arm_arm
 	bne fin_for
 for
 	add r9, r10, #0x00000004 ; r0=&deltas_columna
-	ldrsb r9,[r9] ; r0=deltas_columna[i]
+	ldrsb r9,[r9] ; r9=deltas_columna[i]
 	mov r7,r10 ; r7=&deltas_fila
 	ldrsb r7,[r7] ; r1=deltas_fila[i]
 	;no hace falta? mov r3,r10; r3=color
