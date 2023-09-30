@@ -1,4 +1,88 @@
-   AREA datos, DATA, READWRITE
+uint8_t
+conecta_K_hay_linea_c_c2(TABLERO *t, uint8_t fila, uint8_t columna, uint8_t color)
+{
+	 enum { N_DELTAS = 4};
+   int8_t deltas_fila[N_DELTAS] = {0, -1, -1, 1};
+   int8_t deltas_columna[N_DELTAS] = {-1, 0, -1, -1};
+   unsigned int i = 0;
+   uint8_t linea = FALSE;
+   uint8_t long_linea = 0;
+   unsigned int aux = 0;
+   uint8_t fila2=0;
+   uint8_t columna2=0;
+   uint8_t delta_columna2=0;
+   uint8_t delta_fila2=0;
+   int8_t res=0;
+   
+
+   // buscar linea en fila, columna y 2 diagonales
+   while((i < N_DELTAS) && (linea == FALSE)){
+        if(aux % 2){
+            fila2 = fila-deltas_fila[i];
+            columna2 = columna-deltas_columna[i];
+            delta_fila2 = -deltas_fila[i];
+            delta_columna2 = -deltas_columna[i];
+            i++;
+        }else{
+            fila2 = fila;
+            columna2 = columna;
+            delta_fila2 = deltas_fila[i];
+            delta_columna2 = deltas_columna[i];
+						long_linea = 0;
+            
+        }
+        aux ++;
+
+
+        uint8_t longitud = 0;
+
+        do{
+            // comprobar validez posición
+            if( fila2 >= NUM_FILAS || columna2 >= NUM_COLUMNAS) {
+                res = -1;
+            }else{
+
+                // buscar columna en estructura dispersa
+                size_t col = 0;
+                for(; (col < MAX_NO_CERO) && (t->columnas[fila2][col] != columna2); ++col);
+
+                if(col == MAX_NO_CERO) {
+                    res =  -1;
+                }else{
+
+                    //si mismo color al que busco devolver encontrada
+                    if((t->no_ceros[fila2][col] & 0x03) == color) {
+                        res =  0;
+			longitud++;
+			fila2 += delta_fila2;
+			columna2 += delta_columna2;
+                    }else{
+                                            
+                        // devolver error si posicion invalida y distinto color
+                        res= -1;
+                    }
+
+                }
+            }
+        }while ( res == EXITO);
+
+        long_linea += longitud;
+       linea = long_linea >= K_SIZE;
+
+   }
+   return linea;
+
+}
+
+
+
+
+
+
+
+
+
+AREA datos, DATA, READWRITE
 deltas_fila     EQU     0x00ffff01
 deltas_columna  EQU     0xff00ffff
 n_deltas        EQU     4
