@@ -142,12 +142,15 @@ void conecta_K_visualizar_tablero(TABLERO *t, uint8_t pantalla[8][8])
 int conecta_K_verificar_K_en_linea(TABLERO *t, uint8_t fila, uint8_t columna, uint8_t color){
 	// en esta funcion es donde se debe verificar que todas las optimizaciones dan el mismo resultado
 	uint8_t resultado_c_c = conecta_K_hay_linea_c_c(t, fila, columna, color);
-	//uint8_t resultado_arm_arm = conecta_K_hay_linea_arm_arm(t, fila, columna, color);
+	uint8_t resultado_arm_arm = conecta_K_hay_linea_arm_arm(t, fila, columna, color);
 
-	//if(resultado_arm_arm != resultado_c_c) while(1);
-	return resultado_c_c;
-	//return resultado_arm_arm;
+	if(resultado_arm_arm != resultado_c_c) while(1);
+	//return resultado_c_c;
+	return resultado_arm_arm;
 }
+
+
+
 
 void conecta_K_jugar(void){
 	// new, row, column, colour, padding to prevent desalinating to 8 bytes
@@ -168,6 +171,7 @@ void conecta_K_jugar(void){
 	entrada_inicializar(entrada);
 	
 	while (1){
+
 		while (entrada_nueva(entrada) == 0){};
 		entrada_leer(entrada, &row, &column, &colour);
 		//validada la entrada en rango, mirar color valido?
@@ -179,6 +183,65 @@ void conecta_K_jugar(void){
 					conecta_K_visualizar_tablero(&cuadricula, salida);
 					if(conecta_K_verificar_K_en_linea(&cuadricula, row, column, colour)) {
 						while(1); // equivaldria a K_linea encontrada, fin de partida... 
+					}
+				}
+				else {
+					while(1); //no cabe en la matriz dispersa, hemos dimensionado mal, error de diseño
+				}
+			}
+			//else: celda no vacia
+		}
+		//else: fuera de rango fila, columna o color
+		entrada_inicializar (entrada);
+	}
+}
+
+
+void cargar_nueva_entrada( volatile uint8_t *entrada){
+	static volatile uint8_t matriz_entradas[4][4] = {
+		1,1,1,1,
+		1,3,2,1,
+		1,4,4,1,
+		1,4,4,2
+	};
+}
+
+void conecta_K_test(void){
+	// new, row, column, colour, padding to prevent desalinating to 8 bytes
+	static volatile uint8_t entrada[8] = {0, 0, 0, 0, 0, 0, 0, 0 }; //jugada, fila, columna, color, ...
+	// 8x8 intentando que este alineada para que se vea bien en memoria
+	static uint8_t salida[8][8];
+
+	int fin = 0;
+	
+	TABLERO cuadricula;
+
+	uint8_t row, column, colour;
+
+	tablero_inicializar(&cuadricula);
+
+	conecta_K_test_cargar_tablero(&cuadricula);
+	conecta_K_visualizar_tablero(&cuadricula, salida);
+
+
+	entrada_inicializar(entrada);
+	
+	while (1){
+		cargar_nueva_entrada(&entrada);
+		while (entrada_nueva(entrada) == 0){};
+		entrada_leer(entrada, &row, &column, &colour);
+		//validada la entrada en rango, mirar color valido?
+		if(tablero_fila_valida(row) && tablero_columna_valida(column) && tablero_color_valido(colour)){	
+			//podriamos no validarla ya que tablero_insertar_valor vuelve a validar
+			if (celda_vacia(tablero_leer_celda(&cuadricula, row, column))){
+				//tablero_insertar tambien chequea si esta libre esa celda o no...
+				if(tablero_insertar_color(&cuadricula, row, column, colour) == EXITO) {
+					conecta_K_visualizar_tablero(&cuadricula, salida);
+					if(conecta_K_verificar_K_en_linea(&cuadricula, row, column, colour)) {
+						//while(1); // equivaldria a K_linea encontrada, fin de partida... 
+						fin = 1;
+						conecta_K_test_cargar_tablero(&cuadricula);
+						conecta_K_visualizar_tablero(&cuadricula, salida);
 					}
 				}
 				else {
