@@ -32,9 +32,85 @@ uint8_t longitud = 0;
 
 // devuelve true si encuentra una línea de longitud mayor o igual a _K
 uint8_t
-conecta_K_hay_linea_c_c(TABLERO *t, uint8_t fila, uint8_t columna, uint8_t color)
+conecta_K_hay_linea_c_c2(TABLERO *t, uint8_t fila, uint8_t columna, uint8_t color)
 {
 	 enum { N_DELTAS = 4};
+   int8_t deltas_fila[N_DELTAS] = {0, -1, -1, 1};
+   int8_t deltas_columna[N_DELTAS] = {-1, 0, -1, -1};
+   unsigned int i = 0;
+   uint8_t linea = FALSE;
+   uint8_t long_linea = 0;
+   unsigned int aux = 0;
+   uint8_t fila2=0;
+   uint8_t columna2=0;
+   uint8_t delta_columna2=0;
+   uint8_t delta_fila2=0;
+   int8_t res=0;
+   
+
+   // buscar linea en fila, columna y 2 diagonales
+   while((i < N_DELTAS) && (linea == FALSE)){
+        if(aux % 2){
+            fila2 = fila-deltas_fila[i];
+            columna2 = columna-deltas_columna[i];
+            delta_fila2 = -deltas_fila[i];
+            delta_columna2 = -deltas_columna[i];
+            i++;
+        }else{
+            fila2 = fila;
+            columna2 = columna;
+            delta_fila2 = deltas_fila[i];
+            delta_columna2 = deltas_columna[i];
+						long_linea = 0;
+            
+        }
+        aux ++;
+
+
+        uint8_t longitud = 0;
+
+        do{
+            // comprobar validez posición
+            if( fila2 >= NUM_FILAS || columna2 >= NUM_COLUMNAS) {
+                res = -1;
+            }else{
+
+                // buscar columna en estructura dispersa
+                size_t col = 0;
+                for(; (col < MAX_NO_CERO) && (t->columnas[fila2][col] != columna2); ++col);
+
+                if(col == MAX_NO_CERO) {
+                    res =  -1;
+                }else{
+
+                    //si mismo color al que busco devolver encontrada
+                    if((t->no_ceros[fila2][col] & 0x03) == color) {
+                        res =  0;
+											  longitud++;
+												fila2 += delta_fila2;
+												columna2 += delta_columna2;
+                    }else{
+                                            
+                        // devolver error si posicion invalida y distinto color
+                        res= -1;
+                    }
+
+                }
+            }
+        }while ( res == EXITO);
+
+        long_linea += longitud;
+       linea = long_linea >= K_SIZE;
+
+   }
+   return linea;
+
+}
+
+// devuelve true si encuentra una línea de longitud mayor o igual a 4
+uint8_t conecta_K_hay_linea_c_c(TABLERO *t, uint8_t fila, uint8_t
+	columna, uint8_t color){
+		 enum { N_DELTAS = 4};
    int8_t deltas_fila[N_DELTAS] = {0, -1, -1, 1};
    int8_t deltas_columna[N_DELTAS] = {-1, 0, -1, -1};
    unsigned int i = 0;
@@ -55,7 +131,8 @@ conecta_K_hay_linea_c_c(TABLERO *t, uint8_t fila, uint8_t columna, uint8_t color
        linea = long_linea >= K_SIZE;
    }
    return linea;
-}
+		
+	}
 
 
 
@@ -141,20 +218,17 @@ void conecta_K_visualizar_tablero(TABLERO *t, uint8_t pantalla[8][8])
 //
 int conecta_K_verificar_K_en_linea(TABLERO *t, uint8_t fila, uint8_t columna, uint8_t color){
 	// en esta funcion es donde se debe verificar que todas las optimizaciones dan el mismo resultado
-	uint8_t resultado_c_c = conecta_K_hay_linea_c_c(t, fila, columna, color);
-	uint8_t resultado_arm_arm = conecta_K_hay_linea_arm_arm(t, fila, columna, color);
+	//uint8_t resultado_c_c = conecta_K_hay_linea_c_arm(t, fila, columna, color);
+	uint8_t resultado_arm_arm = conecta_K_hay_linea_c_c(t, fila, columna, color);
 
-	if(resultado_arm_arm != resultado_c_c) while(1);
+	//if(resultado_arm_arm != resultado_c_c) while(1);
 	//return resultado_c_c;
-	return resultado_arm_arm;
+	//return resultado_arm_arm;
 }
-
-
-
 
 void conecta_K_jugar(void){
 	// new, row, column, colour, padding to prevent desalinating to 8 bytes
-	static volatile uint8_t entrada[8] = {0, 0, 0, 0, 0, 0, 0, 0 }; //jugada, fila, columna, color, ...
+	static volatile uint8_t entrada[8] = {1, 4, 4, 2, 0, 0, 0, 0 }; //jugada, fila, columna, color, ...
 	// 8x8 intentando que este alineada para que se vea bien en memoria
 	static uint8_t salida[8][8];
 	
@@ -168,10 +242,9 @@ void conecta_K_jugar(void){
 	conecta_K_visualizar_tablero(&cuadricula, salida);
 
 
-	entrada_inicializar(entrada);
+	//entrada_inicializar(entrada);
 	
 	while (1){
-
 		while (entrada_nueva(entrada) == 0){};
 		entrada_leer(entrada, &row, &column, &colour);
 		//validada la entrada en rango, mirar color valido?
@@ -197,13 +270,85 @@ void conecta_K_jugar(void){
 }
 
 
-void cargar_nueva_entrada( volatile uint8_t *entrada){
-	static volatile uint8_t matriz_entradas[4][4] = {
+
+
+
+
+
+
+void limpiar_tablero(TABLERO *t){
+		for(int i=0; i<7; i++){
+		for(int j=0; j<7; j++){
+				tablero_borrar_celda(t,i,j);
+			}
+		}
+	
+}
+
+void visualizar_nuevo_tablero(TABLERO *t, uint8_t pantalla[8][8]){
+			for(int i=0; i<7; i++){
+			for(int j=0; j<7; j++){
+				pantalla[i+1][j+1] = 0;
+			}
+		}
+}
+
+
+void cargar_nueva_entrada( volatile uint8_t *entrada, int i){
+	static volatile uint8_t matriz_entradas[35][4] = {
 		1,1,1,1,
 		1,3,2,1,
 		1,4,4,1,
-		1,4,4,2
+		
+		1,6,6,2,
+		1,5,6,2,
+		1,4,6,2,
+		1,3,6,2,
+		
+		1,2,2,1,
+		1,2,3,1,
+		1,2,4,1,
+		1,2,5,1,
+		
+		1,2,2,1,
+		1,3,3,2,
+		1,2,3,1,
+		1,2,4,2,
+		1,3,2,1,
+		1,4,2,2,
+		1,5,1,1,
+		1,1,5,2,
+		
+		1,4,4,1,
+		1,3,4,2,
+		1,4,3,1,
+		1,4,2,2,
+		1,5,3,1,
+		1,3,3,2,
+		1,6,3,1,
+		1,7,3,2,
+		1,4,5,1,
+		1,4,6,2,
+		1,5,5,1,
+		1,3,5,2,
+		1,6,5,1,
+		1,3,6,2
 	};
+	
+	//static uint8_t
+//tablero_test2[8][8] =
+//{
+//0, 0, 0, 0, 0, 0, 0,
+//0, 0, 0, 0, 0, 0, 0,
+//0, 1, 2, 2, 2, 2, 0,
+//0, 2, 1, 1, 1, 2, 0,
+//0, 0, 1, 0, 1, 0, 0,
+//0, 0, 1, 0, 1, 0, 0,
+//0, 0, 2, 0, 2, 0, 0};
+	for(int j=0; j<4; j++){
+		entrada[j] = matriz_entradas[i][j];
+	}
+	
 }
 
 void conecta_K_test(void){
@@ -212,7 +357,8 @@ void conecta_K_test(void){
 	// 8x8 intentando que este alineada para que se vea bien en memoria
 	static uint8_t salida[8][8];
 
-	int fin = 0;
+	//int fin = 0;
+	int i = 0;
 	
 	TABLERO cuadricula;
 
@@ -227,7 +373,8 @@ void conecta_K_test(void){
 	entrada_inicializar(entrada);
 	
 	while (1){
-		cargar_nueva_entrada(&entrada);
+		cargar_nueva_entrada(entrada, i);
+		i++;
 		while (entrada_nueva(entrada) == 0){};
 		entrada_leer(entrada, &row, &column, &colour);
 		//validada la entrada en rango, mirar color valido?
@@ -239,8 +386,13 @@ void conecta_K_test(void){
 					conecta_K_visualizar_tablero(&cuadricula, salida);
 					if(conecta_K_verificar_K_en_linea(&cuadricula, row, column, colour)) {
 						//while(1); // equivaldria a K_linea encontrada, fin de partida... 
-						fin = 1;
-						conecta_K_test_cargar_tablero(&cuadricula);
+						//fin = 1;
+						limpiar_tablero(&cuadricula);
+						visualizar_nuevo_tablero(&cuadricula,salida);
+						
+						//tablero_inicializar(&cuadricula);
+						//conecta_K_test_cargar_tablero(&cuadricula);
+
 						conecta_K_visualizar_tablero(&cuadricula, salida);
 					}
 				}
@@ -254,3 +406,4 @@ void conecta_K_test(void){
 		entrada_inicializar (entrada);
 	}
 }
+

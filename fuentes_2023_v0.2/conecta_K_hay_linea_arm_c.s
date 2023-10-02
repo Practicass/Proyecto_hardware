@@ -1,5 +1,11 @@
-	AREA datos,DATA, READWRITE
-		
+    AREA datos, DATA, READWRITE
+deltas_fila     EQU     0x00ffff01
+deltas_columna  EQU     0xff00ffff
+n_deltas        EQU     4
+k_size          EQU     4
+num_filas       EQU     7
+num_columnas    EQU     7
+max_no_cero     EQU     6
 	AREA codigo,CODE, READONLY
 	ENTRY
 	IMPORT conecta_K_buscar_alineamiento_c
@@ -8,89 +14,82 @@
 
 
 conecta_K_hay_linea_arm_c
-	stmdb r13!, {r0-r10,r14}
-	mov r9, r0
-	mov r7, r1
-	mov r8, r2
-	mov r10, r3
-	add r0, PC, #0x0000011C
-	ldr r0, [r0]
-	str r0, [r13, #0x000C]
-	add r0, PC, #0x00000114
-	ldr r0, [r0]
-	str r0, [r13,#0x0008]
-	mov r4, #0x00000000
-	mov r5, #0x00000000
-	mov r6, #0x00000000
-	nop
-	b fin
-
-for add r0, r13, #0x00000008
-	ldrsb r0,[r0,r4]
-	add r1,r13,#0x0000000C
-	ldrsb r1,[r1,r4]
-	mov r3,r10
-	mov r2,r8
-	str r1,[r13]
-	mov r1,r7
-	str r0,[r13,#0X0004]
-	mov r0,r9
-	bl conecta_K_buscar_alineamiento_c
-	mov r6,r0
-	cmp r6,#0x00000004
-	blt salto1
-	mov r0,#0x00000001
-	b salto2
-
-salto1	mov r0,#0x00000000
-
-salto2 mov r5,r0
-	cmp r5,#0x00000000
-	beq salir_if
-	b fin
-salir_if add r0,r13,#0x00000008
-	ldrb r0,[r0,r4]
-	rsb r0,r0,#0x00000000
-	mov r0,r0,LSL #24
-	mov r0,r0,ASR #24
-	add r1,r13,#0x0000000C
-	ldrb r1,[r1,r4]
-	rsb r1,r1,#0x00000000
-	mov r0,r0,LSL #24
-	mov r0,r0,ASR #24
-	str r0,[r13,#0X0004]
-	str r1,[r13]
-	add r0,r13, #0x00000008
-	ldrb r0,[r0,r4]
-	sub r0,r8,r0 
-	and r2,r0,#0x000000FF
-	add r0,r12,#0x0000000C
-	ldrb r0,[r0,r4]
-	sub r0,r7,r0  
-	and r1,r0,#0x000000FF
-	mov r3,r10 
-	mov r0,r9 
-	bl conecta_K_buscar_alineamiento_c
-	add r0,r0,r6
-	add r6,r0, #0x000000FF
-	cmp r6, #0x00000004
-	blt salto3
-	mov r0,#0x00000001
-	b salto4
-
-salto3 mov r0,#0x00000000
-
-salto4	mov r5,r0
-	nop 
-
-fin	add r4,r4,#0x00000001
-	cmp r4,#0x00000004
-	bcs salto5
-	cmp r5,#0x00000000
-	beq for
-
-salto5	mov r0,r5
-	add r13,r13,#0x00000010
-	ldmia r13!, {r4-r10,r14}
+	STMDB     R13!,{R4-R10,R14}
+	SUB 	R13,R13,#0x0010
+	MOV       R9,R0
+	MOV       R7,R1
+	MOV       R8,R2
+	MOV       R10,R3
+	LDR       R0,=deltas_fila
+	STR       R0,[R13,#0x000C]
+	LDR       R0,=deltas_columna
+	STR       R0,[R13,#0x0008]
+	MOV       R4,#0x00000000
+	MOV       R5,#0x00000000
+	MOV       R6,#0x00000000
+	NOP       
+	B         salto1
+salto8	ADD       R0,R13,#0x00000008
+	LDRSB     R0,[R0,R4]
+	ADD       R1,R13,#0x0000000C
+	LDRSB     R1,[R1,R4]
+	MOV       R3,R10
+	MOV       R2,R8
+	STR       R1,[R13]
+	MOV       R1,R7
+	STR       R0,[R13,#0x0004]
+	MOV       R0,R9
+	BL        conecta_K_buscar_alineamiento_c
+	MOV       R6,R0
+	CMP       R6,#0x00000004
+	BLT       salto2
+	MOV       R0,#0x00000001
+	B         salto3
+salto2	MOV       R0,#0x00000000
+salto3	MOV       R5,R0
+	CMP       R5,#0x00000000
+	BEQ       salto4
+	B         salto5
+salto4	ADD       R0,R13,#0x00000008
+	LDRB      R0,[R0,R4]
+	RSB       R0,R0,#0x00000000
+	MOV       R0,R0,LSL #24
+	MOV       R0,R0,ASR #24
+	ADD       R1,R13,#0x0000000C
+	LDRB      R1,[R1,R4]
+	RSB       R1,R1,#0x00000000
+	MOV       R1,R1,LSL #24
+	MOV       R1,R1,ASR #24
+	STR       R0,[R13,#0x0004]
+	STR       R1,[R13]
+	ADD       R0,R13,#0x00000008
+	LDRB      R0,[R0,R4]
+	SUB       R0,R8,R0
+	AND       R2,R0,#0x000000FF
+	ADD       R0,R13,#0x0000000C
+	LDRB      R0,[R0,R4]
+	SUB       R0,R7,R0
+	AND       R1,R0,#0x000000FF
+	MOV       R3,R10
+	MOV       R0,R9
+	BL        conecta_K_buscar_alineamiento_c
+	ADD       R0,R0,R6
+	AND       R6,R0,#0x000000FF
+	CMP       R6,#0x00000004
+	BLT       salto6
+	MOV       R0,#0x00000001
+	B         salto7
+salto6	MOV       R0,#0x00000000
+salto7	MOV       R5,R0
+	NOP       
+salto5	ADD       R4,R4,#0x00000001
+salto1	CMP       R4,#0x00000004
+	BCS       salto9
+	CMP       R5,#0x00000000
+	BEQ       salto8
+salto9	MOV       R0,R5
+	ADD       R13,R13,#0x00000010
+	LDMIA     R13!,{R4-R10,R14}
+	BX        R14
 	
 	END

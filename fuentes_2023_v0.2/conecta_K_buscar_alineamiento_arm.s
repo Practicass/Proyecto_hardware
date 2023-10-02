@@ -12,88 +12,63 @@
 ;conecta_K_buscar_alineamiento_arm
 
 conecta_K_buscar_alineamiento_arm 
-    stmdb     r13!,{r4-r12,r14}
-    mov       r10,r0; r10=1arg 
-    mov       r4,r1; r4=2arg
-    mov       r5,r2; r5=3arg
-    mov       r11,r3; r11=4arg
-    add       r7,r13,#0x00000028; r7= cima pila  
-    ldmia     r7,{r6-r7}; r6=
-    mov       r3,r11
-    mov       r2,r5
-    mov       r1,r4
-    mov       r0,r10
-    stmdb     r13!,{r4-r8,r14}
-    mov       r6,r0
-    mov       r5,r1
-    mov       r7,r2
-    mov       r8,r3
-    mov       r0,r5
-    mov       r1,r0
-    cmp       r1,#0x00000007
-    bge       jump8
-    mov       r0,#0x00000001
-     b        jump9
-jump8 mov       r0,#0x00000000
+    STMDB     R13!,{R4-R10,R14}; GUARDA ESTADO ANTERIOR
+	MOV  	R8, R1
+	MOV		R9,R2
+    MOV       R4,#0
+hop9    CMP       R8,#0x0007
+    BGE       hop1
+    CMP       R9,#0x007
+    BLT       hop2
+hop1 MVN       R5,#0
+    B         hop3
+hop2    MOV R6, #0
+    B hop8
+hop5 ADD       R6,R6,#1
+hop8 CMP       R6,#6
+	BCS       hop4
+	;---
+	ADD       R7,R8,R8,LSL #1
+	ADD       R7,R6,R7,LSL #1
+	LDRB      R7,[R0,R7]
+	;---
+	CMP       R7,R9
+	BNE       hop5
+hop4 CMP      R6,#6
+    BNE       hop6
+
+    MVN       R5,#0
+    B       hop3 
+hop6 ADD R7,R8,R8,LSL #1
+    ADD R10,R0,#0x00002A
+    ADD R7,R6,R7,LSL #1
+    LDRB R7,[R10,R7]
+    ;????
+    AND R7,R7,#0x0003
+    CMP R7,R3
+    BNE hop7
+
+    MOV R5,#0
+    ADD R7,R4,#1
+    AND R4,R7,#0x0FF
+
+    LDRB R7,[R13,#0x020]
+    ADD R7,R8,R7
+    AND R8,R7,#0x00000FF 
+
+    LDR R7,[R13,#0x024]
+    ADD R7,R9,R7
+    AND R9,R7,#0x00000FF 
+    B hop3
+
+hop7 MVN R5,#0
+
+hop3 CMP R5, #0
+    BEQ hop9
     
-jump9 cmp       r0,#0x00000000
-    beq       jump2
-    mov       r0,r7
-    
-    mov       r1,r0
-    cmp       r1,#0x00000007
-    bge       jump10
-    mov       r0,#0x00000001
-    b jump11
-jump10 mov       r0,#0x00000000
-    
-jump11 cmp       r0,#0x00000000
-    bne       jump3
-jump2 mvn       r0,#0x00000000
-jump17 ldmia     r13!,{r4-r8,r14}
-    b        jump12
-jump3 mov       r4,#0x00000000
-    b         jump4
-jump6 add       r4,r4,#0x00000001
-jump4 cmp       r4,#0x00000006
-    bcs       jump5
-    add       r0,r5,r5,lsl #1
-    add       r0,r6,r0,lsl #1
-    ldrb      r0,[r0,r4]
-    cmp       r0,r7
-    bne       jump6
-jump5 cmp       r4,#0x00000006
-    bne       jump16
-    mvn       r0,#0x00000000
-    b         jump7
-jump16 add       r1,r5,r5,lsl #1
-    add       r2,r6,#0x0000002a
-    add       r1,r2,r1,lsl #1
-    ldrb      r0,[r1,r4]
-    and       r1,r0,#0x00000003
-    cmp       r1,r8
-    bne       jump7
-    mov       r0,#0x00000000
-    b         jump17
-jump7 mvn       r0,#0x00000000
-    b         jump17
-jump12 cmp       r0,#0x00000000
-    beq       jump20
-    mov       r0,#0x00000000
-jump1 ldmia     r13!,{r4-r12,r14}
-    bx        r14
-jump20 add       r0,r4,r6
-    and       r8,r0,#0x000000ff
-    add       r0,r5,r7
-    and       r9,r0,#0x000000ff
-    mov       r3,r11
-    mov       r2,r9
-    mov       r1,r8
-    mov       r0,r10
-    stmia     r13,{r6-r7}
-    bl        conecta_K_buscar_alineamiento_arm
-    add       r0,r0,#0x00000001
-    and       r0,r0,#0x000000ff
-    b         jump1
+    MOV R0,R4
+    LDMIA R13!,{R4-R10,R14}
+    BX R14
+
 	
 	END

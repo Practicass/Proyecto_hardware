@@ -1,110 +1,173 @@
-	AREA datos,DATA, READWRITE
-		
+    AREA datos, DATA, READWRITE
+deltas_fila     EQU     0x00ffff01
+deltas_columna  EQU     0xff00ffff
+n_deltas        EQU     4
+k_size          EQU     4
+num_filas       EQU     7
+num_columnas    EQU     7
+max_no_cero     EQU     6
+
 	AREA codigo,CODE, READONLY
-	ENTRY
-	IMPORT conecta_K_buscar_alineamiento_arm
 	EXPORT conecta_K_hay_linea_arm_arm
 	PRESERVE8
-
-
+	ENTRY
 conecta_K_hay_linea_arm_arm
-	stmdb r13!, {r4-r10,r14}; guarda el estado
-	mov r9, r0; r9=tablero
-	mov r7, r1; r7=fila
-	mov r8, r2; r8=columna
+	STMDB     R13!,{R4-R10,R14}
+	SUB       R13,R13,#0x00000024
+	STR       R0,[R13,#0X0018]
+	MOV       R4,R1
+	MOV       R5,R2
+	MOV       R7,R3
+	;...
+	STR       R7,[R13,#0x00020]
+	;...
+	LDR       R0,=deltas_fila
+	STR       R0,[R13,#0x0010]
+	LDR       R0,=deltas_columna
+	STR       R0,[R13,#0x000C]
+	MOV       R1,#0x00000000
+	;...
+	STR       R1,[R13,#0x0001c]
+	;...
+	MOV       R10,#0x00000000
+	MOV       R8,#0x00000000
+	MOV       R9,#0x00000000
+	;...
+	STR       R9,[R13,#0X0014]
+	;...
+	MOV       R2,#0x00000000
+	MOV       R3,#0x00000000
+	MOV       R0,#0x00000000
+	STR       R0,[R13,#0x0008]
+	STR       R0,[R13,#0x0004]
+	STR       R0,[R13]
+jump14  LDR R1,[R13,#0x001c]
+	CMP       R1,#0x00000004
+	BCS       jump13
+	CMP       R10,#0x00000000
+	BNE       jump13
+	LDR       R9,[r13,#0x14]
+	AND       R0,R9,#0x00000001
+	CMP       R0,#0x00000000
+	BEQ       jump2
+
+	ADD       R0,R13,#0x00000010
+	LDR       R1,[R13,#0x001c]
+	RSB	   R1,R1,#0x003
+	LDRB      R0,[R0,R1]
+	SUB       R0,R4,R0
+	AND       R2,R0,#0x000000FF
+
+	ADD       R0,R13,#0x0000000C
+	LDRB      R0,[R0,R1]
+	SUB       R0,R5,R0
+	AND       R3,R0,#0x000000FF
+
+	ADD       R0,R13,#0x00000010
+	LDRB      R0,[R0,R1]
+	RSB       R0,R0,#0x00000000
+	AND       R0,R0,#0x000000FF
+	STR       R0,[R13,#0x0004]
+
+	ADD       R0,R13,#0x0000000C
+	LDRB      R0,[R0,R1]
+	RSB       R0,R0,#0x00000000
+	AND       R0,R0,#0x000000FF
+	STR       R0,[R13,#0x0008]
+
+	RSB	   R1,R1,#0x003
+	ADD       R1,R1,#0x00000001
+	STR		  R1,[R13,#0x001c]
+	B         jump3
+jump2 MOV       R2,R4
+	MOV       R3,R5
+	ADD       R0,R13,#0x00000010
+	LDR       R1,[R13,#0x001c]
+	RSB	   R1,R1,#0x003
+	LDRB      R0,[R0,R1]
+	STR       R0,[R13,#0x0004]
+
+	ADD       R0,R13,#0x0000000C
+	LDRB      R0,[R0,R1]
+	STR       R0,[R13,#0x0008]
+	MOV       R8,#0x00000000
+jump3 LDR R9,[R13,#0x14]
+	ADD       R9,R9,#0x00000001
+	STR 	  R9,[R13,#0x00014]
+	MOV       R6,#0x00000000
+jump10 CMP       R2,#0x00000007
+	BGE       jump17
+	CMP       R3,#0x00000007
+	BLT       jump4
+jump17 MVN       R0,#0x00000000
+	STR       R0,[R13]
+	B         jump15
+jump4 MOV       R0,#0x00000000
+	B         jump5
+jump6 ADD       R0,R0,#0x00000001
+jump5 CMP       R0,#0x00000006
+	BCS       jump16
+	;---
+	LDR       R9,[R13,#0x0018]
+	ADD       R1,R2,R2,LSL #1
+	ADD       R1,R9,R1,LSL #1
+	LDRB      R1,[R1,R0]
+	;---
+	CMP       R1,R3
+	BNE       jump6
+jump16 CMP       R0,#0x00000006
+	BNE       jump7
+
+	MVN       R1,#0x00000000
+	STR       R1,[R13]
+	B         jump8
+
+	;----
+jump7 ADD       R1,R2,R2,LSL #1
+	ADD       R7,R9,#0x0000002A
+	ADD       R1,R7,R1,LSL #1
+	LDRB      R1,[R1,R0]
+	AND       R1,R1,#0x00000003
+	LDR       R7,[R13,#0x00020]
+	CMP       R1,R7
+	BNE       jump9
+	;----
+
+	MOV       R1,#0x00000000
+	STR       R1,[R13]
+									   
+	ADD       R1,R6,#0x00000001
+	AND       R6,R1,#0x000000FF
+									   
+	LDR       R1,[R13,#0x0004]
+	ADD       R1,R1,R2
+	AND       R2,R1,#0x000000FF
+
+	LDR       R1,[R13,#0x0008]
+	ADD       R1,R1,R3
+	AND       R3,R1,#0x000000FF
+	B         jump8
+jump9 MVN       R1,#0x00000000
+	STR       R1,[R13]
+jump8 NOP  
+jump15 LDR       R0,[R13]
+	CMP       R0,#0x00000000
+	BEQ       jump10
+
+	ADD       R0,R8,R6
+	AND       R8,R0,#0x000000FF
+
+	CMP       R8,#0x00000004
+	BLT       jump11
+	MOV       R0,#0x00000001
+	B         jump12
+jump11 MOV       R0,#0x00000000
+jump12 MOV       R10,R0
+	NOP
+	B jump14
+jump13 MOV       R0,R10
+	ADD       R13,R13,#0x00000024
+	LDMIA     R13!,{R4-R10,R14}
+	BX        R14
 	
-	;add r9, PC, #0x0000011C; r0=0x578
-
-	;deltas_fila[N_DELTAS] = {0, -1, -1, 1}, &deltas_fila = 0x4000043C
-	mov r5, #0x01000000
-	add r5, r5, #0x00ff0000
-	add r5, r5, #0x0000ff00
-	
-	mov r10, #0
-	mov r6, #0x40
-	add r10, r10, r6, lsl #24
-	add r10, r10, r6, lsl #4
-	mov r6, #0x38
-	add r10, r6, r10
-	
-	str r5, [r10] ;int8_t deltas_columna[N_DELTAS] = {-1, 0, -1, -1}; &deltas_columna = 0x40000438
-	mov r5, #0xff00ffff
-	str r5, [r10, #4]
-
-	; no hace falta?? mov r10, r3; r10=color
-	mov r4, #0x00000000 ;r4=i=0
-	mov r5, #0x00000000 ;r5=linea
-	mov r6, #0x00000000 ;r6=long_linea
-	
-	nop
-
-	add r4,r4,#0x00000001 ; i++
-	cmp r4,#0x00000004 ;(i < N_DELTAS)
-	bcs fin_for
-	cmp r5,#0x00000000 ;(linea == FALSE)
-	bne fin_for
-for
-	add r9, r10, #0x00000004 ; r0=&deltas_columna
-	ldrsb r9,[r9] ; r9=deltas_columna[i]
-	mov r7,r10 ; r7=&deltas_fila
-	ldrsb r7,[r7] ; r1=deltas_fila[i]
-	;no hace falta? mov r3,r10; r3=color
-	;no hace falta? mov r2,r8
-	str r7,[r13] ;pasa el argumento deltas_fila[i] por pila
-	; mov r1,r7 se ha cambiado el r1 por r7 en instrucciones anteriores
-	str r9,[r13,#0X0004] ;pasa el argumento deltas_columna[i] por pila
-	;mov r0,r9; se ha cambiado el r0 por r9 en instrucciones anteriores
-	;actualizar cima pla
-	bl conecta_K_buscar_alineamiento_arm
-	mov r6,r0
-	cmp r6,#0x00000004
-	blt salto1
-	mov r0,#0x00000001
-	b salto2
-
-salto1	mov r0,#0x00000000
-
-salto2 mov r5,r0
-	cmp r5,#0x00000000
-	beq salir_if
-	b fin_for
-salir_if add r0,r13,#0x00000008
-	ldrb r0,[r0,r4]
-	rsb r0,r0,#0x00000000
-	mov r0,r0,LSL #24
-	mov r0,r0,ASR #24
-	add r1,r13,#0x0000000C
-	ldrb r1,[r1,r4]
-	rsb r1,r1,#0x00000000
-	mov r0,r0,LSL #24
-	mov r0,r0,ASR #24
-	str r0,[r13,#0X0004]
-	str r1,[r13]
-	add r0,r13, #0x00000008
-	ldrb r0,[r0,r4]
-	sub r0,r8,r0 
-	and r2,r0,#0x000000FF
-	add r0,r12,#0x0000000C
-	ldrb r0,[r0,r4]
-	sub r0,r7,r0  
-	and r1,r0,#0x000000FF
-	mov r3,r10 
-	mov r0,r9 
-	bl conecta_K_buscar_alineamiento_arm
-	add r0,r0,r6
-	add r6,r0, #0x000000FF
-	cmp r6, #0x00000004
-	blt salto3
-	mov r0,#0x00000001
-	b salto4
-
-salto3 mov r0,#0x00000000
-
-salto4	mov r5,r0
-	nop 
-
-fin_for	mov r0,r5
-	add r13,r13,#0x00000010
-	ldmia r13!, {r4-r10,r14}
-	bx r14
 	END
