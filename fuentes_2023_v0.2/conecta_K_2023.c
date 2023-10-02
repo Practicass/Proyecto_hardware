@@ -301,7 +301,7 @@ void visualizar_nuevo_tablero( uint8_t pantalla[8][8]){
 
 // Carga diferentes combinaciones de jugadas para comprobar el correcto funcionamiento de nuestra función
 void cargar_nueva_entrada( volatile uint8_t *entrada, int i){
-	static volatile uint8_t matriz_entradas[35][4] = {
+	static volatile uint8_t matriz_entradas[60][4] = {
 		1,1,1,1,
 		1,3,2,1,
 		1,4,4,1,
