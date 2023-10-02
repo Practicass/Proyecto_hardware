@@ -137,7 +137,11 @@ tablero_buscar_color(const TABLERO *t, uint8_t fila, uint8_t columna, uint8_t co
 
 	// buscar columna en estructura dispersa
 	size_t col = 0;
-	for(; (col <= MAX_NO_CERO) && (t->columnas[fila][col] != columna); ++col);
+	for(; (col < MAX_NO_CERO) && (t->columnas[fila][col] != columna); ++col);
+
+	if(col == MAX_NO_CERO) {
+		return ERROR;
+	}
 
 	//si mismo color al que busco devolver encontrada
 	if(celda_color(t->no_ceros[fila][col]) == color) {

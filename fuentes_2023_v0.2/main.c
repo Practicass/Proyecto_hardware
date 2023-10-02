@@ -6,7 +6,9 @@ int main (void) {
 	//... practica 2
 	
 	//jugar
+
 	conecta_K_jugar();
+	//conecta_K_test();
 	
 	while(1); //no hay S.O., no se retorna
 }

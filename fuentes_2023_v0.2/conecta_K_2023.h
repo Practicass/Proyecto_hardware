@@ -14,6 +14,9 @@
 // función principal del juego
 void conecta_K_jugar(void);
 
+// función test del juego
+void conecta_K_test(void);
+
 // devuelve la longitud de la línea más larga
 uint8_t conecta_K_buscar_alineamiento_c(TABLERO *t, uint8_t fila,
 	uint8_t columna, uint8_t color, int8_t delta_fila, int8_t
