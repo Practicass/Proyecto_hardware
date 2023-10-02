@@ -30,7 +30,7 @@ uint8_t longitud = 0;
     return longitud;
 }
 
-// devuelve true si encuentra una línea de longitud mayor o igual a _K
+// conecta_K_hay_linea_c_c sin recursividad 
 uint8_t
 conecta_K_hay_linea_c_c2(TABLERO *t, uint8_t fila, uint8_t columna, uint8_t color)
 {
@@ -218,17 +218,17 @@ void conecta_K_visualizar_tablero(TABLERO *t, uint8_t pantalla[8][8])
 //
 int conecta_K_verificar_K_en_linea(TABLERO *t, uint8_t fila, uint8_t columna, uint8_t color){
 	// en esta funcion es donde se debe verificar que todas las optimizaciones dan el mismo resultado
-	//uint8_t resultado_c_c = conecta_K_hay_linea_c_arm(t, fila, columna, color);
+	uint8_t resultado_c_c = conecta_K_hay_linea_c_arm(t, fila, columna, color);
 	uint8_t resultado_arm_arm = conecta_K_hay_linea_c_c(t, fila, columna, color);
 
-	//if(resultado_arm_arm != resultado_c_c) while(1);
-	//return resultado_c_c;
-	//return resultado_arm_arm;
+	if(resultado_arm_arm != resultado_c_c) while(1);
+
+	return resultado_arm_arm;
 }
 
 void conecta_K_jugar(void){
 	// new, row, column, colour, padding to prevent desalinating to 8 bytes
-	static volatile uint8_t entrada[8] = {1, 4, 4, 2, 0, 0, 0, 0 }; //jugada, fila, columna, color, ...
+	static volatile uint8_t entrada[8] = {0, 0, 0, 0, 0, 0, 0, 0 }; //jugada, fila, columna, color, ...
 	// 8x8 intentando que este alineada para que se vea bien en memoria
 	static uint8_t salida[8][8];
 	
@@ -242,7 +242,7 @@ void conecta_K_jugar(void){
 	conecta_K_visualizar_tablero(&cuadricula, salida);
 
 
-	//entrada_inicializar(entrada);
+	entrada_inicializar(entrada);
 	
 	while (1){
 		while (entrada_nueva(entrada) == 0){};
@@ -274,8 +274,12 @@ void conecta_K_jugar(void){
 
 
 
+//-----------------------------------------------------------------------------------------
+//-----------------FUNCIONES PARA REALIZAR EL TESTING -------------------------------------
+//-----------------------------------------------------------------------------------------
 
 
+// Pone todas las casillas del tablero t a 0, es decir quita todas las fichas del tablero
 void limpiar_tablero(TABLERO *t){
 		for(int i=0; i<7; i++){
 		for(int j=0; j<7; j++){
@@ -285,7 +289,9 @@ void limpiar_tablero(TABLERO *t){
 	
 }
 
-void visualizar_nuevo_tablero(TABLERO *t, uint8_t pantalla[8][8]){
+
+// Escribe en memoria el nuevo tablero vacio
+void visualizar_nuevo_tablero( uint8_t pantalla[8][8]){
 			for(int i=0; i<7; i++){
 			for(int j=0; j<7; j++){
 				pantalla[i+1][j+1] = 0;
@@ -293,7 +299,7 @@ void visualizar_nuevo_tablero(TABLERO *t, uint8_t pantalla[8][8]){
 		}
 }
 
-
+// Carga diferentes combinaciones de jugadas para comprobar el correcto funcionamiento de nuestra función
 void cargar_nueva_entrada( volatile uint8_t *entrada, int i){
 	static volatile uint8_t matriz_entradas[35][4] = {
 		1,1,1,1,
@@ -351,6 +357,8 @@ void cargar_nueva_entrada( volatile uint8_t *entrada, int i){
 	
 }
 
+
+
 void conecta_K_test(void){
 	// new, row, column, colour, padding to prevent desalinating to 8 bytes
 	static volatile uint8_t entrada[8] = {0, 0, 0, 0, 0, 0, 0, 0 }; //jugada, fila, columna, color, ...
@@ -388,7 +396,7 @@ void conecta_K_test(void){
 						//while(1); // equivaldria a K_linea encontrada, fin de partida... 
 						//fin = 1;
 						limpiar_tablero(&cuadricula);
-						visualizar_nuevo_tablero(&cuadricula,salida);
+						visualizar_nuevo_tablero(salida);
 						
 						//tablero_inicializar(&cuadricula);
 						//conecta_K_test_cargar_tablero(&cuadricula);
