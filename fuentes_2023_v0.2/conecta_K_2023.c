@@ -394,7 +394,6 @@ void conecta_K_test(void){
 	// 8x8 intentando que este alineada para que se vea bien en memoria
 	static uint8_t salida[8][8];
 
-	//int fin = 0;
 	int i = 0;
 	
 	TABLERO cuadricula;

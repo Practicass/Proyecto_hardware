@@ -1,6 +1,5 @@
     AREA datos, DATA, READWRITE
 deltas_fila     EQU     0x00ffff01
-deltas_columna  EQU     0xff00ffff
 n_deltas        EQU     4
 k_size          EQU     4
 num_filas       EQU     7
@@ -23,7 +22,7 @@ conecta_K_hay_linea_arm_arm
 	;...
 	LDR       R0,=deltas_fila		;   int8_t deltas_fila[N_DELTAS] = {0, -1, -1, 1};
 	STR       R0,[R13,#0x0010]
-	LDR       R0,=deltas_columna	;   int8_t deltas_columna[N_DELTAS] = {-1, 0, -1, -1};
+	MVN 	  R0, #0x00FF0000			;LDR       R0,=deltas_columna	;   int8_t deltas_columna[N_DELTAS] = {-1, 0, -1, -1};
 	STR       R0,[R13,#0x000C]
 	MOV       R1,#0x00000000		;   unsigned int i = 0;
 	;...
