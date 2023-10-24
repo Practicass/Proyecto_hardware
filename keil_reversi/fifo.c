@@ -3,7 +3,7 @@
 
 struct fifo{
     EVENTOS queue[TAM];
-    int index_begin, index_end;
+    int index_begin, index_end; // begin = eventos procesados  end= eventos encolados
     GPIO_HAL_PIN_T pin_overflow;
     int adelantado; // booleano que indica si los inidices estan adelantados o no
     uint32_t contador[NUMEVENTOS];
@@ -24,12 +24,12 @@ void FIFO_inicializar(GPIO_HAL_PIN_T pin_overflow){
     
     while (i<=TAM){
         cola.queue[i].id = VOID;
-		cola.queue[i].auxData = 0;
+				cola.queue[i].auxData = 0;
         i++;
     }
     i = 0;
     while (i<=NUMEVENTOS){
-        cola.contador[i] = 0;
+        cola.contador[i] = 0; //inicializar contadores
         i++;
     }
 
@@ -54,7 +54,7 @@ void FIFO_encolar(EVENTO_T ID_evento, uint32_t auxData){
         cola.adelantado = 1;
     }
 
-    cola.contador[ID_evento]++;
+    cola.contador[ID_evento]++; //aumenta contador
 }
 
 //Si hay eventos sin procesar, devuelve un valor distinto de cero y el evento más antiguo sin procesar por referencia. Cero indicará 

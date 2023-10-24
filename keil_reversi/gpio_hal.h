@@ -16,7 +16,8 @@ enum  gpio_hal_pin_dir_t{
 
 
 
-
+///Permite emplear el GPIO y debe ser invocada
+//antes de poder llamar al resto de funciones de la biblioteca.
 __inline static
 void gpio_hal_iniciar(){
 
@@ -25,7 +26,7 @@ void gpio_hal_iniciar(){
 
 }
 
-
+//los bits indicados se utilizarán como entrada o salida según la dirección.
 __inline static void 
 gpio_hal_sentido( GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enum gpio_hal_pin_dir_t direccion){
 	
@@ -37,7 +38,9 @@ gpio_hal_sentido( GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enum gpio_hal_
     }
 }
 
-
+//gpio_inicial indica el primer bit a leer, num_bits indica
+//cuántos bits queremos leer. La función devuelve un entero con el valor
+//de los bits indicados
 __inline static uint32_t
 gpio_hal_leer( GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits){
 	
@@ -45,7 +48,9 @@ gpio_hal_leer( GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits){
 	
 }
 
-
+//similar al anterior, pero en lugar de leer escribe en los
+//bits indicados el valor (si valor no puede representarse en los bits
+//indicados se escribirá los num_bits menos significativos a partir del inicial)
 __inline static void 
 gpio_hal_escribir( GPIO_HAL_PIN_T bit_inicial, uint8_t num_bits, uint32_t valor){
 
