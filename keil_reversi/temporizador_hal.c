@@ -76,7 +76,7 @@ void temporizador1_hal_iniciar(uint32_t periodo, void
 (*funcion_callback)()){
 		funcion_callback2 = funcion_callback;
 		timer1_int_count = 0;                   
-		T1PR = 2726;
+		T1PR = 1500;
 		T1MR0 = periodo;
         T1MCR = 3;
 		T1TCR = 1;

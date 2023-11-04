@@ -6,7 +6,7 @@
 
 
 #define TAM 32
-#define NUMEVENTOS 4
+#define NUMEVENTOS 8
 
 //Definición del tipo de datos EVENTO_T: Conjunto de eventos posibles. En el fichero de cabecera se incluirá el tipo de datos y 
 //el conjunto de posibles eventos identificados con nombre humano. Reservemos el ID VOID con valor cero para inicializar la cola. 
@@ -15,7 +15,11 @@ enum ID_EVENTO
     VOID = 0,
     TIMER = 1,
     GPIO = 2,
-    HELLOWORLD = 3
+    HELLOWORLD = 3,
+    ALARMA_OVERFLOW = 4,
+    BOTON = 5,
+    BOTON_EINT1_ALARM = 6,
+    BOTON_EINT2_ALARM = 7
 };
 
 typedef uint8_t EVENTO_T;
@@ -24,6 +28,15 @@ typedef struct EVENTOS{
     EVENTO_T id;
     uint32_t auxData;
 }EVENTOS;
+
+struct fifo{
+    EVENTOS queue[TAM];
+    int index_begin, index_end; // begin = eventos procesados  end= eventos encolados
+    GPIO_HAL_PIN_T pin_overflow;
+    int adelantado; // booleano que indica si los inidices estan adelantados o no
+    uint32_t contador[NUMEVENTOS];
+
+};
 
 
 

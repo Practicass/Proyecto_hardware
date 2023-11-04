@@ -4,6 +4,8 @@
 #include <inttypes.h>
 #include "hello_world.h"
 #include "power.h"
+#include "alarmas.h"
+#include "botones.h"
 
 
 void planificador(void);

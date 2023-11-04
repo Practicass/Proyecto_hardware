@@ -1,14 +1,7 @@
 #include "fifo.h"
 #include "gpio_hal.h"
 
-struct fifo{
-    EVENTOS queue[TAM];
-    int index_begin, index_end; // begin = eventos procesados  end= eventos encolados
-    GPIO_HAL_PIN_T pin_overflow;
-    int adelantado; // booleano que indica si los inidices estan adelantados o no
-    uint32_t contador[NUMEVENTOS];
 
-};
 
 
 // index_begin = 29 e index_end 3, adelantdo = true -> se encolan 3 index_begin = 0 index_end 3, adelantado = 0
