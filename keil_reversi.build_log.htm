@@ -1,0 +1,58 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.26.2.0
+Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: pablo angusto, unizar, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.26.2.0
+Toolchain Path:  D:\keil\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARM.DLL V5.26.2.0
+Dialog DLL:      DARMP.DLL V1.53.0.0
+Target DLL:      UL2ARM.DLL V1.74.10.0
+Dialog DLL:      TARMP.DLL V1.53.0.0
+ 
+<h2>Project:</h2>
+D:\proyectoHardware\PROYHARDWARE\Proyecto_hardware\keil_reversi\keil_reversi.uvproj
+Project File Date:  11/02/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\keil\ARM\ARMCC\Bin'
+Rebuild target 'Simulator'
+assembling Startup.s...
+compiling Power_management.c...
+Power_management.c(10): warning:  #223-D: function "Switch_to_PLL" declared implicitly
+  	Switch_to_PLL();
+Power_management.c: 1 warning, 0 errors
+compiling temporizador_drv.c...
+compiling fifo.c...
+compiling temporizador_hal.c...
+compiling Retarget.c...
+compiling hello_world.c...
+hello_world.c(25): warning:  #550-D: variable "periodo"  was set but never used
+  	uint32_t periodo;	
+hello_world.c: 1 warning, 0 errors
+compiling planificador.c...
+compiling main.c...
+compiling alarmas.c...
+alarmas.c(27): warning:  #223-D: function "temporizador_drv_reloj" declared implicitly
+  		temporizador_drv_reloj(1, &FIFO_encolar, TIMER);
+alarmas.c: 1 warning, 0 errors
+compiling int_externas_hal.c...
+compiling power.c...
+compiling botones.c...
+linking...
+Program Size: Code=13368 RO-data=176 RW-data=48 ZI-data=2704  
+".\keil_reversi.axf" - 0 Error(s), 3 Warning(s).
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>
