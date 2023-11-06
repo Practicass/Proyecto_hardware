@@ -9,3 +9,4 @@
 .\hello_world.o: temporizador_hal.h
 .\hello_world.o: fifo.h
 .\hello_world.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
+.\hello_world.o: alarmas.h

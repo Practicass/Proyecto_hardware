@@ -10,8 +10,9 @@
 .\main.o: temporizador_drv.h
 .\main.o: fifo.h
 .\main.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
-.\main.o: power.h
-.\main.o: Power_management.h
 .\main.o: alarmas.h
+.\main.o: power.h
 .\main.o: botones.h
 .\main.o: int_externas_hal.h
+.\main.o: visualizar.h
+.\main.o: test.h

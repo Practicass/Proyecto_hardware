@@ -7,9 +7,7 @@ uint32_t x;
 
 //actualiza el contador y el estado de los leds 
 void hello_world_tick_tack(){
-	
-		//activa los pines
-    gpio_hal_escribir(GPIO_HELLO_WORLD,GPIO_HELLO_WORLD_BITS, x);
+
 		//aumenta el contador
     x= x*2;
 		if(x >= pow(2,GPIO_HELLO_WORLD_BITS)){
@@ -26,8 +24,7 @@ void hello_world_inicializar(GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enu
 	x=1;
 		
 	
-		// inicializar gpio
-    gpio_hal_iniciar();
+		
 	
 		//configurar direccion de los pines
     gpio_hal_sentido(gpio_inicial, num_bits, direccion);
@@ -35,8 +32,16 @@ void hello_world_inicializar(GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enu
 		//prgramar el reloj para que encole evento cada periodo ms
 		periodo= 10;
 		
-    //temporizador_drv_reloj(periodo, func, HELLOWORLD);
+    //temporizador_drv_reloj(periodo, func, ev_LATIDO);
+	alarma_activar(ev_LATIDO,0x8000000a,0);
 		//llamar a alarma
      
     
+}
+
+
+void hello_world_tratar_evento(){
+	
+	hello_world_tick_tack(); // aumenta el contador
+	FIFO_encolar(ev_VISUALIZAR_HELLO,x); // encola el evento para visualizar y el valor a visualizar
 }

@@ -2,29 +2,45 @@
 #ifndef TEMPORIZADOR_HAL_H
 #define TEMPORIZADOR_HAL_H
 
-#define TEMPORIZADOR_HAL_TICKS2US  3000
+#define TEMPORIZADOR_HAL_TICKS2US  1500
 
 #include <inttypes.h>
 
 
 
-//función que programa un contador para que pueda ser utilizado
+//funciï¿½n que programa un contador para que pueda ser utilizado
 void temporizador_hal_iniciar(void);
 
-//función que inicia la cuenta de un contador de forma indefinida
+//funciï¿½n que inicia la cuenta de un contador de forma indefinida
 void temporizador_hal_empezar(void);
 
-//función que lee el tiempo que lleva contando el contador desde 
-//la última vez que se ejecutó temporizador_hal_empezar y lo devuelve 
+//funciï¿½n que lee el tiempo que lleva contando el contador desde 
+//la ï¿½ltima vez que se ejecutï¿½ temporizador_hal_empezar y lo devuelve 
 //en ticks
 uint64_t temporizador_hal_leer(void);
 
 //detiene el contador y devuelve el tiempo en ticks transcurrido desde 
-//el último temporizador_hal_empezar uint64_t temporizador_hal_parar(void);
+//el ï¿½ltimo temporizador_hal_empezar uint64_t temporizador_hal_parar(void);
 uint64_t temporizador_hal_parar(void);
 
-//función dependiente del hardware (timer1)
-//que programa el reloj para que llame a la función de callback cada
+//funciï¿½n que programa un contador para que pueda ser utilizado
+void temporizador1_hal_iniciar(uint32_t periodo, void
+(*funcion_callback)());
+
+//funciï¿½n que inicia la cuenta de un contador de forma indefinida
+void temporizador1_hal_empezar(void);
+
+//funciï¿½n que lee el tiempo que lleva contando el contador desde 
+//la ï¿½ltima vez que se ejecutï¿½ temporizador_hal_empezar y lo devuelve 
+//en ticks
+uint64_t temporizador1_hal_leer(void);
+
+//detiene el contador y devuelve el tiempo en ticks transcurrido desde 
+//el ï¿½ltimo temporizador_hal_empezar uint64_t temporizador_hal_parar(void);
+uint64_t temporizador1_hal_parar(void);
+
+//funciï¿½n dependiente del hardware (timer1)
+//que programa el reloj para que llame a la funciï¿½n de callback cada
 //periodo. El periodo se indica en ms. Si el periodo es cero se para el
 //temporizador
 void temporizador_hal_reloj (uint32_t periodo, void

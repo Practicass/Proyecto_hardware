@@ -1,5 +1,7 @@
 
 #include <LPC210X.H>
-#include "Power_management.h"
 
+extern void Switch_to_PLL(void);
 void power_hal_wait(void);
+void power_hal_deep_sleep(void);
+

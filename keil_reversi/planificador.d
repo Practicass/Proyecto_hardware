@@ -10,8 +10,9 @@
 .\planificador.o: temporizador_hal.h
 .\planificador.o: fifo.h
 .\planificador.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
-.\planificador.o: power.h
-.\planificador.o: Power_management.h
 .\planificador.o: alarmas.h
+.\planificador.o: power.h
 .\planificador.o: botones.h
 .\planificador.o: int_externas_hal.h
+.\planificador.o: visualizar.h
+.\planificador.o: test.h

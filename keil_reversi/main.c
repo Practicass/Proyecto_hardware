@@ -46,9 +46,13 @@
 //}
 
 int main(void){
-	
+  
   temporizador_drv_iniciar();
 	planificador();
+  
+
+  //se para la ejecución al saltar ALARMA_OVERFLOW y se debe reiniciar el planificador
+  //planificador();
 
 
 }

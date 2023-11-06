@@ -13,7 +13,7 @@ void FIFO_inicializar(GPIO_HAL_PIN_T pin_overflow){
     cola.index_end = 0;
     cola.pin_overflow = pin_overflow;
     cola.adelantado = 0;
-		gpio_hal_sentido(pin_overflow, GPIO_OVERFLOW_BITS, GPIO_HAL_PIN_DIR_OUTPUT);
+	gpio_hal_sentido(pin_overflow, GPIO_OVERFLOW_BITS, GPIO_HAL_PIN_DIR_OUTPUT);
     
     while (i<=TAM){
         cola.queue[i].id = VOID;

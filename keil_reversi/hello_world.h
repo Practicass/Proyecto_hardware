@@ -7,6 +7,7 @@
 #include "gpio_hal.h"
 #include "temporizador_drv.h"
 #include <math.h>
+#include "alarmas.h"
 
 
 
@@ -18,6 +19,8 @@ void hello_world_tick_tack(void);
 
 //configura los pines correspondientes
 void hello_world_inicializar(GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enum gpio_hal_pin_dir_t direccion);
+
+void hello_world_tratar_evento(void);
 
 
 #endif

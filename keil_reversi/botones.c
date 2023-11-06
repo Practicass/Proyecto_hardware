@@ -32,15 +32,17 @@ void botones_monitorizar(uint8_t ID_evento){
 	switch (ID_evento) {
 		case BOTON_EINT1_ALARM:
 			if(!eint1_hold()){
-				eint1_enable();
 				alarma_activar(BOTON_EINT1_ALARM, 0,0);
+				boton_1 = NO_PULSADO;
+				eint1_enable();
 			}
 			
 			break;
 		case BOTON_EINT2_ALARM:
 			if(!eint2_hold()){
-				eint2_enable();
 				alarma_activar(BOTON_EINT2_ALARM, 0,0);
+				boton_1 = NO_PULSADO;
+				eint2_enable();
 			}
 
 			break;

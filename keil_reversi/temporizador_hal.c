@@ -6,6 +6,7 @@
 
 static volatile unsigned int timer0_int_count = 0;
 static volatile unsigned int timer1_int_count = 0;
+static volatile uint32_t periodoAux = 0;
 void (*funcion_callback2)();
 
 
@@ -17,14 +18,14 @@ void timer_ISR (void) __irq {
     VICVectAddr = 0;                            // Acknowledge Interrupt
 }
 void timer1_ISR (void) __irq {
-	
+	timer1_int_count++;
     funcion_callback2();
     T1IR = 1;                              // Clear interrupt flag
     VICVectAddr = 0;                            // Acknowledge Interrupt
 }
 
 
-//función que programa un contador para que pueda ser utilizado
+//funciï¿½n que programa un contador para que pueda ser utilizado
 void temporizador_hal_iniciar(){
     timer0_int_count = 0;
 		
@@ -44,7 +45,7 @@ void temporizador_hal_iniciar(){
 
 
 
-//función que inicia la cuenta de un contador de forma indefinida
+//funciï¿½n que inicia la cuenta de un contador de forma indefinida
 void temporizador_hal_empezar(){
     T0TCR = 1;
     VICIntEnable = VICIntEnable | 0x10;
@@ -53,8 +54,8 @@ void temporizador_hal_empezar(){
     T0PC = 0;
 }
 
-//función que lee el tiempo que lleva contando el contador desde 
-//la última vez que se ejecutó temporizador_hal_empezar y lo devuelve 
+//funciï¿½n que lee el tiempo que lleva contando el contador desde 
+//la ï¿½ltima vez que se ejecutï¿½ temporizador_hal_empezar y lo devuelve 
 //en ticks
 uint64_t temporizador_hal_leer(){
     return timer0_int_count * 10000*TEMPORIZADOR_HAL_TICKS2US + T0TC*TEMPORIZADOR_HAL_TICKS2US + T0PC;
@@ -62,7 +63,7 @@ uint64_t temporizador_hal_leer(){
 
 
 //detiene el contador y devuelve el tiempo en ticks transcurrido desde 
-//el último temporizador_hal_empezar uint64_t temporizador_hal_parar(void);
+//el ï¿½ltimo temporizador_hal_empezar uint64_t temporizador_hal_parar(void);
 uint64_t temporizador_hal_parar(){
     T0TCR = 0;
     return temporizador_hal_leer();
@@ -78,6 +79,7 @@ void temporizador1_hal_iniciar(uint32_t periodo, void
 		timer1_int_count = 0;                   
 		T1PR = 1500;
 		T1MR0 = periodo;
+		periodoAux = periodo;
         T1MCR = 3;
 		T1TCR = 1;
 		VICVectAddr0 = (unsigned long)timer1_ISR;
@@ -87,7 +89,7 @@ void temporizador1_hal_iniciar(uint32_t periodo, void
 }
 
 uint64_t temporizador1_hal_leer(){
-    return timer1_int_count * 10000*TEMPORIZADOR_HAL_TICKS2US + T0TC*TEMPORIZADOR_HAL_TICKS2US + T0PC;
+    return timer1_int_count *periodoAux*TEMPORIZADOR_HAL_TICKS2US + T1TC*TEMPORIZADOR_HAL_TICKS2US + T1PC;
 }
 
 uint64_t temporizador1_hal_parar(){
@@ -103,8 +105,8 @@ void temporizador1_hal_empezar(){
     T1PC = 0;
 }
 
-//función dependiente del hardware (timer1)
-//que programa el reloj para que llame a la función de callback cada
+//funciï¿½n dependiente del hardware (timer1)
+//que programa el reloj para que llame a la funciï¿½n de callback cada
 //periodo. El periodo se indica en ms. Si el periodo es cero se para el
 //temporizador
 void temporizador_hal_reloj (uint32_t periodo, void
