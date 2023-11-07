@@ -30,10 +30,10 @@ void hello_world_inicializar(GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enu
     gpio_hal_sentido(gpio_inicial, num_bits, direccion);
 
 		//prgramar el reloj para que encole evento cada periodo ms
-		periodo= 10;
+		periodo= 0x8000000a;
 		
     //temporizador_drv_reloj(periodo, func, ev_LATIDO);
-	alarma_activar(ev_LATIDO,0x8000000a,0);
+	alarma_activar(ev_LATIDO,periodo,0);
 		//llamar a alarma
      
     

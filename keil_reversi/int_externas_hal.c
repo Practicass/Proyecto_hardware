@@ -29,28 +29,6 @@ void eint2_ISR (void) __irq {
 		VICVectAddr = 0;
 }
 
-//void eint1_clear_nueva_pulsacion(void){
-//	eint1_nueva_pulsacion = 0;
-//};
-//
-//void eint2_clear_nueva_pulsacion(void){
-//	eint2_nueva_pulsacion = 0;
-//};
-//
-//unsigned int eint1_read_nueva_pulsacion(void){
-//	return eint1_nueva_pulsacion;
-//};
-//
-//unsigned int eint2_read_nueva_pulsacion(void){
-//	return eint2_nueva_pulsacion;
-//};
-//
-//unsigned int eint1_read_count(void){
-//	return eint1_count;
-//};
-//unsigned int eint2_read_count(void){
-//	return eint2_count;
-//};
 
 
 void eint1_init (void) {
@@ -66,7 +44,7 @@ void eint1_init (void) {
 	// configuration of the IRQ slot number 2 of the VIC for EXTINT0
 	VICVectAddr2 = (unsigned long)eint1_ISR;          // set interrupt vector in 0
     // 0x20 bit 5 enables vectored IRQs. 
-		// 14 is the number of the interrupt assigned. Number 14 is the EINT0 (see table 40 of the LPC2105 user manual  
+		// 15 is the number of the interrupt assigned. Number 15 is the EINT0 (see table 40 of the LPC2105 user manual  
 	PINSEL0 		= PINSEL0 & 0xcfffffff;	//Sets bits 0 and 1 to 0
 	PINSEL0 		= PINSEL0 | 0x20000000;					//Enable the EXTINT0 interrupt
 	VICVectCntl2 = 0x20 | 15;                   
@@ -86,7 +64,7 @@ void eint2_init (void) {
 	// configuration of the IRQ slot number 2 of the VIC for EXTINT0
 	VICVectAddr3 = (unsigned long)eint2_ISR;          // set interrupt vector in 0
     // 0x20 bit 5 enables vectored IRQs. 
-		// 14 is the number of the interrupt assigned. Number 14 is the EINT0 (see table 40 of the LPC2105 user manual  
+		// 16 is the number of the interrupt assigned. Number 16 is the EINT0 (see table 40 of the LPC2105 user manual  
 	PINSEL0 		= PINSEL0 & 0x3fffffff;	//Sets bits 0 and 1 to 0
 	PINSEL0 		= PINSEL0 | 0x80000000;					//Enable the EXTINT0 interrupt
 	VICVectCntl3 = 0x20 | 16;                   

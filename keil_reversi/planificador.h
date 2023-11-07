@@ -7,6 +7,8 @@
 #include "botones.h"
 #include "visualizar.h"
 #include "test.h"
+#include "juego.h"
+
 
 #define USUARIO_AUSENTE 12000
 

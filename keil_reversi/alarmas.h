@@ -3,6 +3,7 @@
 
 
 #include "fifo.h"
+#include "temporizador_drv.h"
 
 #define ALARMAS_MAX 4
 struct alarm{
