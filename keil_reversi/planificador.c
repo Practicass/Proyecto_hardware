@@ -22,13 +22,15 @@ void planificador(){
 
     
 	visualizarInicializar();
+
+	ls_inicializar(&FIFO_encolar, ev_RX_SERIE,UART0_CARACTER,CONTINUAR_ENVIO,ev_TX_SERIE);
 	
 
 		
-		//alarma_activar(HELLOWORLD, 0x8000000a,0);
+	//alarma_activar(HELLOWORLD, 0x8000000a,0);
     //Bucle infinito pendiente de eventos 
-	alarma_activar(DEEP_SLEEP, USUARIO_AUSENTE, 0);
-	//testAlarmas1(); // descomentar para que se lanza el primer test de alarmas
+	//alarma_activar(DEEP_SLEEP, USUARIO_AUSENTE, 0);
+
 	
     while(idEvento != ALARMA_OVERFLOW){
 			//uint8_t hayEvento = 0; //descomentar comprobar overflow cola
@@ -36,9 +38,9 @@ void planificador(){
 			
     	if (hayEvento != 0) {
 				if(idEvento == HELLOWORLD){
-						hello_world_tick_tack();
+					hello_world_tick_tack();
 				}else if(idEvento == ALARMA_OVERFLOW){
-						gpio_hal_escribir( GPIO_OVERFLOW, GPIO_OVERFLOW_BITS,  GPIO_HAL_PIN_DIR_OUTPUT);
+					gpio_hal_escribir( GPIO_OVERFLOW, GPIO_OVERFLOW_BITS,  GPIO_HAL_PIN_DIR_OUTPUT);
 				}else if(idEvento == TIMER){
 					alarma_tratar_evento();
 				}else if(idEvento == BOTON){
@@ -55,20 +57,17 @@ void planificador(){
 					hello_world_tratar_evento();
 				}else if(idEvento == ev_VISUALIZAR_HELLO){
 					visualizarHello(auxData);
-				}else if(idEvento == ev_TEST){
-					if(auxData == 1){ // si el test1 se ha completado correctamente entrará a este if y se lanza el test2
-						testAlarmas2();
-					}else if(auxData == 2){ // si el test2 se ha completado correctamente entrará a este if
-						if(FIFO_estadisticas(ev_TEST) == 5){
-						
-							alarma_activar(ev_TEST,0,0); 	//quitamos la alarma periodica y comprobamos que se eliminan correctamente las alarmas
-							alarma_activar(TEST_OK,200,0);	// se programa una alarma com mayor periodo que la peridoica para comprobar que se ha eliminado
-						}else if(FIFO_estadisticas(ev_TEST)==6){ // si no se elimina correctamente la alarma periódicaentrará a este if y se encenderá el pin OVERFLOW
-							FIFO_encolar(ALARMA_OVERFLOW,0); 
-						}
+				}else if(idEvento == ev_RX_SERIE){
+					linea_serie_drv_enviar_array(auxData);
+					if (auxData == "TAB"){
+						juego_tratar_evento(idEvento,auxData);
 					}
-				}else if(idEvento == TEST_OK){ // si la alarma se ha elimnado correctamente se encolará unicamente el evento de tipo TEST_OK								
-						testAlarmasOverflow(); //y se lanzará el último test que comprueba que no se puedan crear más alarmas de las posibles
+				}else if(idEvento  == UART0_CARACTER){
+					linea_serie_hal(auxData);
+				}else if(idEvento  == CONTINUAR_ENVIO){
+					linea_serie_drv_continuar_envio();
+				}else if(idEvento  == ev_TX_SERIE){
+					idEvento = idEvento;
 				}
 		}else{
 			power_hal_wait();

@@ -3,7 +3,12 @@
 
 
 #include "temporizador_hal.h"
-#include "planificador.h"
+
+#include "planificador_test_alarmas.h"
+
+//prueba
+#include "wd_hal.h"
+
 
 
 
@@ -47,8 +52,15 @@
 
 int main(void){
   
-  temporizador_drv_iniciar();
+  //temporizador_drv_iniciar();
+//
+  //planificadorTestAlarmas();
+//
 	planificador();
+
+  //WD_hal_inicializar(3);
+  //WD_hal_feed();
+  //WD_hal_test();
   
 
   //se para la ejecución al saltar ALARMA_OVERFLOW y se debe reiniciar el planificador

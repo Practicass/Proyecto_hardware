@@ -9,7 +9,7 @@ uint32_t x;
 void hello_world_tick_tack(){
 
 		//aumenta el contador
-    x= x*2;
+    x= x+1;
 		if(x >= pow(2,GPIO_HELLO_WORLD_BITS)){
 			x=1;
 		}

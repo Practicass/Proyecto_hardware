@@ -3,10 +3,11 @@
 #define FIFO_H
 #include <inttypes.h>
 #include "gpio_hal.h"
+#include "SWI.h"
 
 
 #define TAM 32
-#define NUMEVENTOS 14
+#define NUMEVENTOS 18
 
 //Definici�n del tipo de datos EVENTO_T: Conjunto de eventos posibles. En el fichero de cabecera se incluir� el tipo de datos y 
 //el conjunto de posibles eventos identificados con nombre humano. Reservemos el ID VOID con valor cero para inicializar la cola. 
@@ -25,7 +26,11 @@ enum ID_EVENTO
     ev_LATIDO = 10,
     ev_VISUALIZAR_HELLO = 11,
     ev_TEST = 12,
-    TEST_OK = 13
+    TEST_OK = 13,
+    UART0_CARACTER = 14,
+    ev_RX_SERIE = 15,
+    ev_TX_SERIE = 16,
+    CONTINUAR_ENVIO = 17,
 };
 
 typedef uint8_t EVENTO_T;

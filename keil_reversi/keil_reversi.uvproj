@@ -351,8 +351,8 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
-            <oTime>1</oTime>
+            <Optim>1</Optim>
+            <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>0</OneElfS>
             <Strict>0</Strict>
@@ -575,6 +575,86 @@
               <FileName>test.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\test.h</FilePath>
+            </File>
+            <File>
+              <FileName>planificador_test_alarmas.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\planificador_test_alarmas.c</FilePath>
+            </File>
+            <File>
+              <FileName>planificador_test_alarmas.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\planificador_test_alarmas.h</FilePath>
+            </File>
+            <File>
+              <FileName>SWI.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\SWI.s</FilePath>
+            </File>
+            <File>
+              <FileName>SWI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\SWI.h</FilePath>
+            </File>
+            <File>
+              <FileName>wd_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\wd_hal.c</FilePath>
+            </File>
+            <File>
+              <FileName>wd_hal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\wd_hal.h</FilePath>
+            </File>
+            <File>
+              <FileName>linea_serie_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\linea_serie_hal.c</FilePath>
+            </File>
+            <File>
+              <FileName>linea_serie_hal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\linea_serie_hal.h</FilePath>
+            </File>
+            <File>
+              <FileName>linea_serie_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\linea_serie_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>linea_serie_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\linea_serie_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>conecta_K_mod.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\conecta_K_mod.c</FilePath>
+            </File>
+            <File>
+              <FileName>conecta_K_mod.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\conecta_K_mod.h</FilePath>
+            </File>
+            <File>
+              <FileName>tablero.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tablero.c</FilePath>
+            </File>
+            <File>
+              <FileName>tablero.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\tablero.h</FilePath>
+            </File>
+            <File>
+              <FileName>celda.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\celda.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_conecta_K.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\config_conecta_K.h</FilePath>
             </File>
           </Files>
         </Group>

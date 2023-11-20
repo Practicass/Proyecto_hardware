@@ -14,6 +14,8 @@
 
 #define GPIO_OVERFLOW 31
 #define GPIO_OVERFLOW_BITS 1
+#define GPIO_SERIE_ERROR  30
+#define GPIO_SERIE_ERROR_BITS  1
 
 
 

@@ -2,9 +2,9 @@
 
 #include "fifo.h"
 #include "temporizador_drv.h"
+#include "conecta_K_mod.h"
 
 
 void juego_inicializar(void);
 
 void juego_tratar_evento(EVENTO_T ID_evento, uint32_t auxData);
-
