@@ -10,7 +10,7 @@
 
 void linea_serie_ISR(void) __irq;
 
-void linea_serie_inicializar(void (*funcion_callback)(), void (*funcion_callback2)(), uint8_t idEvento);
+void linea_serie_inicializar(void (*funcion_callback)(), void (*funcion_callback2)());
 
 void linea_serie_hal(uint8_t caracter);
 

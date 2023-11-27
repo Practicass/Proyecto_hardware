@@ -142,7 +142,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDARM</Key>
-          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=0,672,331,1000,0)(108=-1,-1,-1,-1,0)(106=994,204,1272,558,0)(105=65,279,255,523,1)(80=784,201,1450,687,0)(104=0,581,316,1000,0)(100=64,815,647,997,1)(113=26,126,411,567,1)(112=220,244,718,954,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=814,458,1500,1000,0)(111=974,426,1500,881,0)(114=277,433,963,881,0)(115=-1,-1,-1,-1,0)(116=790,303,1076,593,0)</Name>
+          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=0,672,331,1000,0)(108=-1,-1,-1,-1,0)(106=994,204,1272,558,0)(105=65,279,255,523,0)(80=784,201,1450,687,0)(104=0,581,316,1000,0)(100=904,489,1487,671,1)(113=235,528,620,969,0)(112=220,244,718,954,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=814,458,1500,1000,0)(111=974,426,1500,881,0)(114=277,433,963,881,0)(115=-1,-1,-1,-1,0)(116=790,303,1076,593,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -156,7 +156,7 @@
           <Type>0</Type>
           <LineNumber>43</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>2632</Address>
+          <Address>2676</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -165,14 +165,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\planificador.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\planificador.c\43</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
           <LineNumber>105</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>3716</Address>
+          <Address>3760</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -181,14 +181,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\alarmas.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\alarmas.c\105</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
           <LineNumber>86</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>3596</Address>
+          <Address>3640</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -197,14 +197,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\alarmas.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\alarmas.c\86</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>3</Number>
           <Type>0</Type>
           <LineNumber>83</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>3588</Address>
+          <Address>3632</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -213,14 +213,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\alarmas.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\alarmas.c\83</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>4</Number>
           <Type>0</Type>
           <LineNumber>75</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>3528</Address>
+          <Address>3572</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -229,14 +229,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\alarmas.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\alarmas.c\75</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>5</Number>
           <Type>0</Type>
           <LineNumber>58</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>3432</Address>
+          <Address>3476</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -245,14 +245,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\alarmas.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\alarmas.c\58</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>6</Number>
           <Type>0</Type>
           <LineNumber>22</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>3260</Address>
+          <Address>3304</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -261,110 +261,126 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\alarmas.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\alarmas.c\22</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>7</Number>
-          <Type>0</Type>
-          <LineNumber>43</LineNumber>
+          <Type>1</Type>
+          <LineNumber>0</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>5768</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\linea_serie_drv.c</Filename>
+          <Filename></Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\linea_serie_drv.c\43</Expression>
+          <Expression>0x40000054 == 0</Expression>
         </Bp>
         <Bp>
           <Number>8</Number>
-          <Type>0</Type>
-          <LineNumber>35</LineNumber>
+          <Type>2</Type>
+          <LineNumber>0</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
+          <Address>1073741908</Address>
+          <ByteObject>1</ByteObject>
           <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\planificador_test_alarmas.c</Filename>
+          <ManyObjects>1</ManyObjects>
+          <SizeOfObject>1</SizeOfObject>
+          <BreakByAccess>2</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename></Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>0x40000054</Expression>
         </Bp>
         <Bp>
           <Number>9</Number>
-          <Type>0</Type>
-          <LineNumber>37</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
+          <Type>2</Type>
+          <LineNumber>0</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>1073741884</Address>
+          <ByteObject>1</ByteObject>
           <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\planificador_test_alarmas.c</Filename>
+          <ManyObjects>1</ManyObjects>
+          <SizeOfObject>1</SizeOfObject>
+          <BreakByAccess>2</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename></Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>0x4000003c</Expression>
         </Bp>
         <Bp>
           <Number>10</Number>
           <Type>0</Type>
-          <LineNumber>39</LineNumber>
+          <LineNumber>53</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>0</Address>
+          <Address>584</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\planificador_test_alarmas.c</Filename>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
           <Number>11</Number>
           <Type>0</Type>
-          <LineNumber>42</LineNumber>
+          <LineNumber>0</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>0</Address>
+          <Address>160</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\planificador_test_alarmas.c</Filename>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename></Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>0x000000A0</Expression>
         </Bp>
         <Bp>
           <Number>12</Number>
           <Type>0</Type>
-          <LineNumber>46</LineNumber>
+          <LineNumber>0</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>0</Address>
+          <Address>148</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\planificador_test_alarmas.c</Filename>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename></Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>0x00000094</Expression>
+        </Bp>
+        <Bp>
+          <Number>13</Number>
+          <Type>0</Type>
+          <LineNumber>0</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>340</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename></Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>0x00000154</Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>4</SubType>
-          <ItemText>&amp;U0RBR</ItemText>
+          <ItemText>0x4000003c</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>
@@ -414,32 +430,32 @@
         <Wi>
           <IntNumber>0</IntNumber>
           <FirstString>`T0TC</FirstString>
-          <SecondString>00800000000000000000000000000000784F02410100000000000000000000000000000054305443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000900000001000000F376A6997716CE3F170000000000000000000000000000000000000098020000</SecondString>
+          <SecondString>00800000000000000000000000000000784F02410100000000000000000000000000000054305443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000900000001000000CD19C4387C16CE3F0C0000000000000000000000000000000000000098020000</SecondString>
         </Wi>
         <Wi>
           <IntNumber>1</IntNumber>
           <FirstString>`VICIRQStatus</FirstString>
-          <SecondString>0000000000000000000000000000E0FFFFFFEF4101000000000000000000000000000000564943495251537461747573000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000020000005584461DE35EC93F170000000000000000000000000000000000000098020000</SecondString>
+          <SecondString>0000000000000000000000000000E0FFFFFFEF4101000000000000000000000000000000564943495251537461747573000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000020000007AA30DCEEA5EC93F0C0000000000000000000000000000000000000098020000</SecondString>
         </Wi>
         <Wi>
           <IntNumber>2</IntNumber>
           <FirstString>`IOPIN</FirstString>
-          <SecondString>FF000000000000C0FFFFDF410000E0FFFFFFEF4102000000000000000000000000000000494F50494E0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004900000003000000BE8FBEF0B6CDC33F1700000000000000000000000000000000000000AC020000</SecondString>
+          <SecondString>FF000000000000C0FFFFDF410000E0FFFFFFEF4102000000000000000000000000000000494F50494E000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000490000000300000049E3917CC9CDC33F0C00000000000000000000000000000000000000AC020000</SecondString>
         </Wi>
         <Wi>
           <IntNumber>3</IntNumber>
           <FirstString>`T1TC</FirstString>
-          <SecondString>FF0000000000000000000000000000000000F03F0000000000000000000000000000000054315443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004900000004000000A772EBA9F7BDBF3F170000000000000000000000000000000000000080020000</SecondString>
+          <SecondString>FF0000000000000000000000000000000000F03F000000000000000000000000000000005431544300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000490000000400000037DB82E21FBFBF3F0C0000000000000000000000000000000000000080020000</SecondString>
         </Wi>
         <Wi>
           <IntNumber>4</IntNumber>
           <FirstString>`PCON</FirstString>
-          <SecondString>008000000000000000000000000000000000F03F0000000000000000000000000000000050434F4E00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000490000000500000098B007CE8BA1BA3F170000000000000000000000000000000000000080020000</SecondString>
+          <SecondString>008000000000000000000000000000000000F03F0000000000000000000000000000000050434F4E000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004900000005000000067AC0A5DA9FBA3F0C0000000000000000000000000000000000000080020000</SecondString>
         </Wi>
         <Wi>
           <IntNumber>5</IntNumber>
           <FirstString>`U0FCR</FirstString>
-          <SecondString>00800000000000000020684000000000008068400200000000000000000000000000000055304643520000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004900000006000000920A017E75AAC53F17000000000000000000000000000000000000002C0C0000</SecondString>
+          <SecondString>00800000000000000020684000000000008068400200000000000000000000000000000055304643520000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004900000006000000920A017E75AAC53F0C000000000000000000000000000000000000002C0C0000</SecondString>
         </Wi>
       </LogicAnalyzers>
     </TargetOption>
@@ -938,72 +954,12 @@
     <File>
       <GroupNumber>3</GroupNumber>
       <FileNumber>40</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\conecta_K_mod.c</PathWithFileName>
-      <FilenameWithoutPath>conecta_K_mod.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>41</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\conecta_K_mod.h</PathWithFileName>
-      <FilenameWithoutPath>conecta_K_mod.h</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>42</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\tablero.c</PathWithFileName>
-      <FilenameWithoutPath>tablero.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>43</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\tablero.h</PathWithFileName>
-      <FilenameWithoutPath>tablero.h</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>44</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\celda.h</PathWithFileName>
-      <FilenameWithoutPath>celda.h</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>45</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\config_conecta_K.h</PathWithFileName>
-      <FilenameWithoutPath>config_conecta_K.h</FilenameWithoutPath>
+      <PathWithFileName>.\eventos.h</PathWithFileName>
+      <FilenameWithoutPath>eventos.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

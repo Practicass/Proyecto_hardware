@@ -5,7 +5,9 @@ struct alarm alarmas[ALARMAS_MAX];
 
 int indexAlarms[NUMEVENTOS];
 
-void alarma_inicializar(void){
+static void (*funcion_callbackAlarmas)();
+
+void alarma_inicializar(void (*funcion_callbackAlarmasParam)()){
 
     int i = 0;
     while (i<= ALARMAS_MAX)
@@ -24,7 +26,8 @@ void alarma_inicializar(void){
         indexAlarms[i] = -1; //-1 indica que no existe alamra de ese evento
 				i++;
     }
-		temporizador_drv_reloj(1, &FIFO_encolar, TIMER);
+		temporizador_drv_reloj(1, funcion_callbackAlarmasParam, TIMER);
+        funcion_callbackAlarmas = funcion_callbackAlarmasParam;
     
     
 }
@@ -83,7 +86,7 @@ auxData){
             if (i == ALARMAS_MAX) //no hay alarmas disponibles
             {
                 //generar evento ALARMA_OVERFLOW
-                FIFO_encolar(ALARMA_OVERFLOW, 0);
+                funcion_callbackAlarmas(ALARMA_OVERFLOW, 0);
             }
             
         }else{ //existe alarma para ese evento
@@ -106,7 +109,7 @@ void alarma_tratar_evento(void){
         if(alarmas[i].ocupado == 1){ //existe alarma
             alarmas[i].contador++ ;
             if(alarmas[i].contador >= alarmas[i].periodo){ //expira alarma
-                FIFO_encolar(alarmas[i].evento, alarmas[i].auxdata);
+                funcion_callbackAlarmas(alarmas[i].evento, alarmas[i].auxdata);
                 if(alarmas[i].periodica == 0){ //se debe repetir 
                     //se quita la alarma correspondiente de ese evento del vector de alarmas
                     id = alarmas[i].evento;

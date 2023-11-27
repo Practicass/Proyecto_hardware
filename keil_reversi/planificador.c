@@ -15,15 +15,15 @@ void planificador(){
     //Inicializar la cola 
 	
     FIFO_inicializar(GPIO_OVERFLOW);
-	alarma_inicializar();
-	hello_world_inicializar(GPIO_HELLO_WORLD, GPIO_HELLO_WORLD_BITS, GPIO_HAL_PIN_DIR_OUTPUT);
+	alarma_inicializar(FIFO_encolar);
+	hello_world_inicializar(GPIO_HELLO_WORLD, GPIO_HELLO_WORLD_BITS, GPIO_HAL_PIN_DIR_OUTPUT,FIFO_encolar);
 
-	botones_init();
-
+	botones_init(FIFO_encolar,alarma_activar);
+	juego_inicializar(FIFO_encolar)
     
 	visualizarInicializar();
 
-	ls_inicializar(&FIFO_encolar, ev_RX_SERIE,UART0_CARACTER,CONTINUAR_ENVIO,ev_TX_SERIE);
+	ls_inicializar(FIFO_encolar, ev_RX_SERIE,UART0_CARACTER,CONTINUAR_ENVIO,ev_TX_SERIE);
 	
 
 		
@@ -59,9 +59,9 @@ void planificador(){
 					visualizarHello(auxData);
 				}else if(idEvento == ev_RX_SERIE){
 					linea_serie_drv_enviar_array(auxData);
-					if (auxData == "TAB"){
-						juego_tratar_evento(idEvento,auxData);
-					}
+					//if (auxData == "TAB"){
+					//	juego_tratar_evento(idEvento,auxData);
+					//}
 				}else if(idEvento  == UART0_CARACTER){
 					linea_serie_hal(auxData);
 				}else if(idEvento  == CONTINUAR_ENVIO){

@@ -10,7 +10,9 @@ void WD_hal_inicializar(int sec){
 void WD_hal_feed(){
     uint32_t irq;
     irq = read_IRQ_bit();
-    disable_irq();  
+    if(irq != 0){
+       disable_irq();
+    }   
     WDFEED = 0xAA;
     WDFEED = 0X55;
     if(irq != 0){

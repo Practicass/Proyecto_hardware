@@ -29,7 +29,7 @@ SWI_Handler
                 BICEQ   R12, R12, #0xFF000000  ; Extract SWI Number
 
 ; add code to enable/disable the global IRQ flag
-                CMP     R12,#0x01              
+                CMP     R12,#0xFC              
                 BEQ     __read_IRQ_bit
                 CMP     R12,#0xFF              
                 BEQ     __enable_irq
@@ -76,27 +76,28 @@ __read_IRQ_bit
     TST R0, #I_Bit
     MOVEQ R0, #0
     MOVNE R0, #1
+   
     LDMFD SP!, {R12, PC}^
 
 __enable_irq
     LDMFD SP!, {R8, R12}
     MRS R0, SPSR
     BIC R0, R0, #I_Bit
-    MSR SPSR_cxsf, R0 
+    MSR SPSR_c, R0 
     LDMFD SP!, {R12, PC}^
 
 __disable_irq
     LDMFD SP!, {R8, R12}
     MRS R0, SPSR
     ORR R0, R0, #I_Bit
-    MSR SPSR_cxsf, R0 
+    MSR SPSR_c, R0 
     LDMFD SP!, {R12, PC}^
 
 __disable_fiq
     LDMFD SP!, {R8, R12}
     MRS R0, SPSR
     ORR R0, R0, #F_Bit
-    MSR SPSR_cxsf, R0 
+    MSR SPSR_c, R0 
     LDMFD SP!, {R12, PC}^
 
 

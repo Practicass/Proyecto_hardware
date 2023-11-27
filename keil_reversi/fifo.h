@@ -4,41 +4,15 @@
 #include <inttypes.h>
 #include "gpio_hal.h"
 #include "SWI.h"
-
+#include "eventos.h"
 
 #define TAM 32
-#define NUMEVENTOS 18
+
 
 //Definici�n del tipo de datos EVENTO_T: Conjunto de eventos posibles. En el fichero de cabecera se incluir� el tipo de datos y 
 //el conjunto de posibles eventos identificados con nombre humano. Reservemos el ID VOID con valor cero para inicializar la cola. 
-enum ID_EVENTO
-{
-    VOID = 0,
-    TIMER = 1,
-    GPIO = 2,
-    HELLOWORLD = 3,
-    ALARMA_OVERFLOW = 4,
-    BOTON = 5,
-    BOTON_EINT1_ALARM = 6,
-    BOTON_EINT2_ALARM = 7,
-	DEEP_SLEEP = 8,
-    ev_VISUALIZAR_CUENTA = 9,
-    ev_LATIDO = 10,
-    ev_VISUALIZAR_HELLO = 11,
-    ev_TEST = 12,
-    TEST_OK = 13,
-    UART0_CARACTER = 14,
-    ev_RX_SERIE = 15,
-    ev_TX_SERIE = 16,
-    CONTINUAR_ENVIO = 17,
-};
 
-typedef uint8_t EVENTO_T;
 
-typedef struct EVENTOS{
-    EVENTO_T id;
-    uint32_t auxData;
-}EVENTOS;
 
 struct fifo{
     EVENTOS queue[TAM];

@@ -2,8 +2,8 @@
 
 
 #include "temporizador_drv.h"
-void (*funcion_callback1)();
-uint8_t event;
+static void (*funcion_callback1)();
+static uint8_t event;
 
 //funci�n que programa un contador para que pueda ser utilizado.
 void temporizador_drv_iniciar(void){

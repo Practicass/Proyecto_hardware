@@ -2,14 +2,14 @@
 #include <LPC210x.H>                       /* LPC210x definitions */
 
 
-#include "temporizador_hal.h"
+//#include "temporizador_hal.h"
 
-#include "planificador_test_alarmas.h"
+// #include "planificador_test_alarmas.h"
 
 //prueba
-#include "wd_hal.h"
+//#include "wd_hal.h"
 
-
+#include "planificador.h"
 
 
 //int main (void){
@@ -56,6 +56,7 @@ int main(void){
 //
   //planificadorTestAlarmas();
 //
+	enable_irq();
 	planificador();
 
   //WD_hal_inicializar(3);

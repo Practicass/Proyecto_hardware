@@ -7,7 +7,7 @@
 static volatile unsigned int timer0_int_count = 0;
 static volatile unsigned int timer1_int_count = 0;
 static volatile uint32_t periodoAux = 0;
-void (*funcion_callback2)();
+static void (*funcion_callback2)();
 
 
 void timer0_ISR (void) __irq;    // Generate Interrupt 

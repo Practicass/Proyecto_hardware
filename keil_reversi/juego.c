@@ -5,16 +5,18 @@ static volatile int cuenta;
 static volatile int intervalo;
 static volatile int ultimaPulsacion = 0;
 static volatile int primeraVez = 0;
+static void (*funcion_callbackJuego)();
 
-void juego_inicializar(){
+void juego_inicializar(void (*funcion_callbackJuegoParam)()){
 	cuenta = 0;
 	intervalo = 0;
-	conecta_K_jugar();
+	funcion_callbackJuego = funcion_callbackJuegoParam;
+	//conecta_K_jugar();
 }
 
 void juego_tratar_evento(EVENTO_T ID_evento, uint32_t auxData){
 	if (ID_evento == ev_RX_SERIE){
-		conecta_K_visualizar_tablero();
+		//conecta_K_visualizar_tablero();
 	}
 	if (primeraVez == 0){
 		primeraVez = 1;
@@ -31,18 +33,18 @@ void juego_tratar_evento(EVENTO_T ID_evento, uint32_t auxData){
 	}else{
 		cuenta--;
 	}
-	FIFO_encolar(ev_VISUALIZAR_CUENTA, cuenta);
+	funcion_callbackJuego(ev_VISUALIZAR_CUENTA, cuenta);
 	
 }
 
-void conecta_K_visualizar_tablero()
-{
+//void conecta_K_visualizar_tablero()
+//{
+//
+//	
+//}  
 
-	
-}  
 
 
-
-void conecta_K_visualizar_tiempo(int num){
-
-}
+//void conecta_K_visualizar_tiempo(int num){
+//
+//}

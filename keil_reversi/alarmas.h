@@ -2,7 +2,6 @@
 #define ALARMAS_H
 
 
-#include "fifo.h"
 #include "temporizador_drv.h"
 
 #define ALARMAS_MAX 4
@@ -15,7 +14,7 @@ struct alarm{
     int ocupado; // ocupado = 0 NO hay una alarma activa, ocupado = 1 existe una alarma activa
 };
 
-void alarma_inicializar(void);
+void alarma_inicializar(void (*funcion_callbackAlarmasParam)());
 
 void alarma_activar(EVENTO_T ID_evento, uint32_t retardo, uint32_t
 auxData);
