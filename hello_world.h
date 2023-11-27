@@ -18,7 +18,7 @@ typedef void* funciontype;
 void hello_world_tick_tack(void);
 
 //configura los pines correspondientes
-void hello_world_inicializar(GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enum gpio_hal_pin_dir_t direccion);
+void hello_world_inicializar(GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enum gpio_hal_pin_dir_t direccion, void (*funcion_callbackAlarmasParam)());
 
 void hello_world_tratar_evento(void);
 

@@ -351,8 +351,8 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
-            <oTime>1</oTime>
+            <Optim>1</Optim>
+            <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>0</OneElfS>
             <Strict>0</Strict>
@@ -363,7 +363,7 @@
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>0</uC99>
+            <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
@@ -585,6 +585,51 @@
               <FileName>planificador_test_alarmas.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\planificador_test_alarmas.h</FilePath>
+            </File>
+            <File>
+              <FileName>SWI.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\SWI.s</FilePath>
+            </File>
+            <File>
+              <FileName>SWI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\SWI.h</FilePath>
+            </File>
+            <File>
+              <FileName>wd_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\wd_hal.c</FilePath>
+            </File>
+            <File>
+              <FileName>wd_hal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\wd_hal.h</FilePath>
+            </File>
+            <File>
+              <FileName>linea_serie_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\linea_serie_hal.c</FilePath>
+            </File>
+            <File>
+              <FileName>linea_serie_hal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\linea_serie_hal.h</FilePath>
+            </File>
+            <File>
+              <FileName>linea_serie_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\linea_serie_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>linea_serie_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\linea_serie_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>eventos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\eventos.h</FilePath>
             </File>
           </Files>
         </Group>

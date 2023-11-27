@@ -6,7 +6,7 @@
 
 #include "temporizador_hal.h"
 
-#include "fifo.h"
+#include "eventos.h"
 
 
 //uint64_t __SWI(0) clock_get_us(void);

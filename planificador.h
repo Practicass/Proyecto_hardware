@@ -6,6 +6,8 @@
 #include "alarmas.h"
 #include "botones.h"
 #include "visualizar.h"
+#include "linea_serie_drv.h"
+#include "fifo.h"
 
 #include "juego.h"
 

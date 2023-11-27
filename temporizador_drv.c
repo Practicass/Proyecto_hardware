@@ -2,8 +2,8 @@
 
 
 #include "temporizador_drv.h"
-void (*funcion_callback1)();
-uint8_t event;
+static void (*funcion_callback1)();
+static uint8_t event;
 
 //funci�n que programa un contador para que pueda ser utilizado.
 void temporizador_drv_iniciar(void){
@@ -18,7 +18,9 @@ void temporizador_drv_empezar(void){
 //funci�n que lee el tiempo que lleva contando el contador desde la 
 //�ltima vez que se ejecut� temporizador_drv_empezar y lo devuelve 
 //en microsegundos.
-//uint64_t __SWI_0 clock_get_us(void);
+uint32_t __swi(0) clock_get_us(void);
+uint32_t __SWI_0 (void) { return (uint32_t)temporizador_drv_leer();}
+
 uint64_t temporizador_drv_leer(void){
 	uint64_t aux = temporizador1_hal_leer() / TEMPORIZADOR_HAL_TICKS2US;
     return aux;

@@ -1,8 +1,8 @@
 
 #include "hello_world.h"
 
+static void (*funcion_callbackHellWorld)();
 
-funciontype func = &FIFO_encolar;
 uint32_t x;
 
 //actualiza el contador y el estado de los leds 
@@ -19,7 +19,7 @@ void hello_world_tick_tack(){
 }
 
 //configura los pines correspondientes
-void hello_world_inicializar(GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enum gpio_hal_pin_dir_t direccion){
+void hello_world_inicializar(GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enum gpio_hal_pin_dir_t direccion, void (*funcion_callbackHWParam)()){
 	uint32_t periodo;	
 	x=1;
 		
@@ -35,6 +35,8 @@ void hello_world_inicializar(GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enu
     //temporizador_drv_reloj(periodo, func, ev_LATIDO);
 	alarma_activar(ev_LATIDO,periodo,0);
 		//llamar a alarma
+	
+	funcion_callbackHellWorld = funcion_callbackHWParam;
      
     
 }
@@ -43,5 +45,5 @@ void hello_world_inicializar(GPIO_HAL_PIN_T gpio_inicial, uint8_t num_bits,  enu
 void hello_world_tratar_evento(){
 	
 	hello_world_tick_tack(); // aumenta el contador
-	FIFO_encolar(ev_VISUALIZAR_HELLO,x); // encola el evento para visualizar y el valor a visualizar
+	funcion_callbackHellWorld(ev_VISUALIZAR_HELLO,x); // encola el evento para visualizar y el valor a visualizar
 }

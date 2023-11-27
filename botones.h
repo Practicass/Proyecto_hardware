@@ -3,8 +3,8 @@
 #define BOTONES
 
 #include "int_externas_hal.h"
-#include "alarmas.h"
 #include "gpio_hal.h"
+#include <inttypes.h>
 
 enum ESTADO{
     PULSADO,
@@ -12,7 +12,7 @@ enum ESTADO{
 };
 
 
-void botones_init(void);
+void botones_init(void (*funcion_callbackBotonesParam)(), void (*funcion_callbackAlarmasParam2)());
 
 void botones_pulsar(uint32_t auxData);
 

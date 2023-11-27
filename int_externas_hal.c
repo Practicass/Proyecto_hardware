@@ -1,5 +1,7 @@
 
 #include "int_externas_hal.h"
+void (*funcion_callbackExt)();
+
 
 //// variable para comprobar que se hacen las interrupciones que deber�an hacerse
 //static volatile unsigned int eint1_count = 0;
@@ -12,7 +14,7 @@
 
 void eint1_ISR (void) __irq {
 	//eint1_count++;
-    FIFO_encolar(BOTON, 1);        
+    funcion_callbackExt(BOTON, 1);        
 	//eint1_nueva_pulsacion = 1;
     VICIntEnable = VICIntEnable & 0xfff7fff;
     VICIntEnClr = 0x00008000;  
@@ -22,7 +24,7 @@ void eint1_ISR (void) __irq {
 
 void eint2_ISR (void) __irq {
 	//eint2_count++;
-    FIFO_encolar(BOTON, 2);        
+    funcion_callbackExt(BOTON, 2);        
 	//eint2_nueva_pulsacion = 1;
     VICIntEnable = VICIntEnable & 0xfffeffff;
 	  VICIntEnClr = 0x00010000;
@@ -31,7 +33,7 @@ void eint2_ISR (void) __irq {
 
 
 
-void eint1_init (void) {
+void eint1_init ( void (*funcion_callbackExtParam)()) {
 // NOTA: seg�n el manual se puede configurar c�mo se activan las interrupciones: por flanco o nivel, alta o baja. 
 // Se usar�an los registros EXTMODE y EXTPOLAR. 
 // Sin embargo parece que el simulador los ignora y no aparecen en la ventana de ocnfiguraci�n de EXT Interrupts
@@ -49,9 +51,10 @@ void eint1_init (void) {
 	PINSEL0 		= PINSEL0 | 0x20000000;					//Enable the EXTINT0 interrupt
 	VICVectCntl2 = 0x20 | 15;                   
     VICIntEnable = VICIntEnable | 0x00008000;                  // Enable EXTINT0 Interrupt
+	funcion_callbackExt = funcion_callbackExtParam;
 }
 
-void eint2_init (void) {
+void eint2_init (void (*funcion_callbackExtParam)()) {
 // NOTA: seg�n el manual se puede configurar c�mo se activan las interrupciones: por flanco o nivel, alta o baja. 
 // Se usar�an los registros EXTMODE y EXTPOLAR. 
 // Sin embargo parece que el simulador los ignora y no aparecen en la ventana de ocnfiguraci�n de EXT Interrupts
@@ -69,6 +72,8 @@ void eint2_init (void) {
 	PINSEL0 		= PINSEL0 | 0x80000000;					//Enable the EXTINT0 interrupt
 	VICVectCntl3 = 0x20 | 16;                   
   VICIntEnable = VICIntEnable | 0x00010000;                  // Enable EXTINT0 Interrupt
+  	funcion_callbackExt = funcion_callbackExtParam;
+
 }
 
 
