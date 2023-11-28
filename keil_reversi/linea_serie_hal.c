@@ -24,7 +24,6 @@ void linea_serie_inicializar(void (*funcion_callback)(), void (*funcion_callback
     U0DLL = 91;
     U0LCR = 3;
     U0IER = 0x3;
-    // U0FCR |= 1;
     VICVectCntl4 = 0x20 | 6;
     VICVectAddr4 = (unsigned long)linea_serie_ISR;
     VICIntEnable |= 0x00000040;

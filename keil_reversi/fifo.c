@@ -37,7 +37,7 @@ void FIFO_encolar(EVENTO_T ID_evento, uint32_t auxData){
     irq = read_IRQ_bit();
     
     if(irq != 0){
-       disable_irq();
+       //disable_irq();
     }    
     
     if(cola.adelantado == 1 && cola.index_begin == cola.index_end){
@@ -53,7 +53,7 @@ void FIFO_encolar(EVENTO_T ID_evento, uint32_t auxData){
 
     cola.contador[ID_evento]++; //aumenta contador
     if(irq != 0){
-       enable_irq();
+       //enable_irq();
     }    
   
 }
@@ -61,13 +61,13 @@ void FIFO_encolar(EVENTO_T ID_evento, uint32_t auxData){
 //Si hay eventos sin procesar, devuelve un valor distinto de cero y el evento más antiguo sin procesar por referencia. Cero indicará 
 //que la cola está vacía y no se ha devuelto ningún evento.
 uint8_t FIFO_extraer(EVENTO_T *ID_evento, uint32_t* auxData){
-    uint32_t irq;
-    irq = read_IRQ_bit();
-    if(irq != 0){
-       disable_irq();
-    }   
+
     if(cola.index_begin != cola.index_end ){
-			
+				    uint32_t irq;
+				irq = read_IRQ_bit();
+				if(irq != 0){
+					 disable_irq();
+				}   
         *ID_evento = (cola.queue[cola.index_begin].id);
         *auxData = (cola.queue[cola.index_begin].auxData);
 			cola.index_begin = (cola.index_begin +1)% TAM;
@@ -81,9 +81,9 @@ uint8_t FIFO_extraer(EVENTO_T *ID_evento, uint32_t* auxData){
         
         return 1;
     }else{
-        if(irq != 0){
-            enable_irq();
-        }
+        //if(irq != 0){
+        //    enable_irq();
+        //}
    
         return 0;
     }

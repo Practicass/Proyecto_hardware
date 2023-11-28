@@ -1,5 +1,13 @@
+#ifndef EVENTOS_H
+#define EVENTOS_H
+
+
 #include <inttypes.h> 
+
 #define NUMEVENTOS 18
+
+
+
 enum ID_EVENTO
 {
     VOID = 0,
@@ -27,4 +35,7 @@ typedef uint8_t EVENTO_T;
 typedef struct EVENTOS{
     EVENTO_T id;
     uint32_t auxData;
-}EVENTOS;
+} EVENTOS;
+
+
+#endif

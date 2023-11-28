@@ -19,7 +19,7 @@ void planificador(){
 	hello_world_inicializar(GPIO_HELLO_WORLD, GPIO_HELLO_WORLD_BITS, GPIO_HAL_PIN_DIR_OUTPUT,FIFO_encolar);
 
 	botones_init(FIFO_encolar,alarma_activar);
-	juego_inicializar(FIFO_encolar)
+	juego_inicializar(FIFO_encolar);
     
 	visualizarInicializar();
 
